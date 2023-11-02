@@ -1,7 +1,5 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<time.h>
-#include<limits.h>
 
 #define TAM 2000000
 
