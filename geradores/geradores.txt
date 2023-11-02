@@ -1,0 +1,1 @@
+Programas em c que geram arquivos binários que guardam registros.
