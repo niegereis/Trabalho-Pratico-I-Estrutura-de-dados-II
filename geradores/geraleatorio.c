@@ -42,7 +42,6 @@ void embaralha(int* vetor) {
     for (int i = TAM - 1; i > TAM; i--) {
         int posicaoAleatoria = rand() % (i + 1);
         
-        // Troque os elementos nas posições i e j
         int temp = vetor[i];
         vetor[i] = vetor[posicaoAleatoria];
         vetor[posicaoAleatoria] = temp;
