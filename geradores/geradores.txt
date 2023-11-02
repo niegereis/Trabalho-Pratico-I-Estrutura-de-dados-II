@@ -1,1 +1,2 @@
 Programas em c que geram arquivos binários que guardam registros.
+Cada arquivo gerado tem em torno de 10GB de tamanho.
