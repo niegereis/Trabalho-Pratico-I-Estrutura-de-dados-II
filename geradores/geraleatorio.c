@@ -1,8 +1,7 @@
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-
 #define TAM 10
-#define LONG_MAX 10
 
 void embaralha(int*);
 
@@ -35,7 +34,7 @@ int main() {
   }
 
   fseek(arquivo, 0, 0);
-  while (fread(&registro, sizeof(Registro), TAM, arquivo) == 1) {
+  while (fread(&registro, sizeof(Registro), 1, arquivo) == 1) {
     printf("-> %d %d %s", registro.chave, registro.dado1, registro.dado2);
   }
   fclose(arquivo);
