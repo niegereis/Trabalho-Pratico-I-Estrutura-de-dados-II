@@ -8,10 +8,10 @@
 #define MM 2
 #define M 1
 
-typedef long TipoChave;
+typedef long Chave;
 
 typedef struct TipoRegistro {
-    TipoChave Chave;
+    Chave Chave;
     long dado1;
     char dado2[sizeOfDado2];
 } TipoRegistro;
