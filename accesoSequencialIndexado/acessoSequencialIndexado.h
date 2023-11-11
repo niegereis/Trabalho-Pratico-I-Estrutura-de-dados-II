@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ITENS_PAGINA 4
-#define QTD_ITENS_A_SER_LIDOS 4
+#define ITENS_PAGINA 3
+#define QTD_ITENS_A_SER_LIDOS 3
 
 typedef struct itemIndice {
   int posicao;
