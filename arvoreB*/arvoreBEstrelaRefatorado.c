@@ -106,7 +106,9 @@ void insercaoDeChaveOrdenada(No* no, int chave, No* apontador,
       break;
     }
   }
+
   chaves[i + 1] = chave;
+  apontadores[i + 2] = apontador;
 
   if (vetorCheio) {
     (*chaveOverflow) = ultimaChave;
