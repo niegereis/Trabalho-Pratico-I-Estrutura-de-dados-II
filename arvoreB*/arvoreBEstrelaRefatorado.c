@@ -11,6 +11,7 @@ No* criaNo(TipoDoNo tipo) {
   no->tipoNo = tipo;
 
   if (tipo == Interno)
+
     no->U.Interno.qtdChaves = 0;
   else
     no->U.Externo.qtdRegistros = 0;
@@ -30,25 +31,67 @@ No* ArvorePercorre(ArvoreBEstrela pNo, int chave, int* nivel) {
 
 void insercaoOrdenada(No* no, Registro registro, Registro* overflow) {
   int qtdRegistros = no->U.Externo.qtdRegistros;
-  Registro ultimoRegistro = no->U.Externo.registros[qtdRegistros - 1];
-  for (int i = 0; i < qtdRegistros; i++) {
-    /* code */
+  bool vetorCheio = qtdRegistros == 2 * M;
+  Registro* registros = no->U.Externo.registros;
+
+  if (vetorCheio) {
+    bool registroMaiorQueUltimaChave =
+        registro.chave > registros[qtdRegistros - 1].chave;
+    if (registroMaiorQueUltimaChave) {
+      (*overflow) = registro;
+      return;
+    }
+  }
+
+  if (qtdRegistros == 0) {
+    registros[0] = registro;
+    no->U.Externo.qtdRegistros++;
+    return;
+  }
+
+  if (qtdRegistros == 1) {
+    bool registroMaiorQueUltimaChave =
+        registro.chave > registros[qtdRegistros - 1].chave;
+    if (registroMaiorQueUltimaChave)
+      registros[1] = registro;
+    else {
+      registros[1] = registros[0];
+      registros[0] = registro;
+    }
+    no->U.Externo.qtdRegistros++;
+    return;
+  }
+
+  Registro ultimoRegistro = registros[qtdRegistros - 1];
+  int i;
+  for (i = qtdRegistros - 2; i >= 0; i--) {
+    if (registro.chave < registros[i].chave) {
+      registros[i + 1] = registros[i];
+    }
+  }
+  registros[i + 1] = registro;
+
+  if (vetorCheio)
+    (*overflow) = ultimoRegistro;
+  else {
+    registros[no->U.Externo.qtdRegistros] = ultimoRegistro;
+    no->U.Externo.qtdRegistros++;
   }
 }
 
-bool arvoreInsereRecursivo(ArvoreBEstrela* pNo, Registro registro, No* no) {
+bool arvoreInsereNaFolha(ArvoreBEstrela* pNo, Registro registro, No* no) {
   if ((*pNo)->tipoNo == Externo) {
     if ((*pNo)->U.Externo.qtdRegistros < 2 * M) {
-      insercaoOrdenada(pNo, registro, NULL);
+      insercaoOrdenada(*pNo, registro, NULL);
     } else {
       Registro registroComMaiorChave;
-      insercaoOrdenada(pNo, registro, &registroComMaiorChave);
+      insercaoOrdenada(*pNo, registro, &registroComMaiorChave);
       No* pNoMaiores = criaNo(Externo);
       for (int i = M; i < 2 * M; i++) {
         pNoMaiores->U.Externo.registros[i - M] = (*pNo)->U.Externo.registros[i];
         pNoMaiores->U.Externo.qtdRegistros++;
       }
-      // TODO: REVISAR
+
       pNoMaiores->U.Externo.registros[M] = registroComMaiorChave;
       pNoMaiores->U.Externo.qtdRegistros++;
 
@@ -59,26 +102,37 @@ bool arvoreInsereRecursivo(ArvoreBEstrela* pNo, Registro registro, No* no) {
   }
 }
 
-bool arvoreInsere(ArvoreBEstrela* pNo, Registro registro) {  // incompleto
-  if (pNo == NULL) {
-    *pNo = criaNo(Externo);
-    (*pNo)->U.Externo.registros[0] = registro;
-    (*pNo)->U.Externo.qtdRegistros++;
+bool arvoreInsere(ArvoreBEstrela* arvore, Registro registro) {  // incompleto
+  if (arvore == NULL) {
+    *arvore = criaNo(Externo);
+    (*arvore)->U.Externo.registros[0] = registro;
+    (*arvore)->U.Externo.qtdRegistros++;
     return true;
   }
 
-  if ((*pNo)->tipoNo == Externo) {
+  if ((*arvore)->tipoNo == Externo) {
     No* novoNoCriado;
-    arvoreInsereRecursivo(pNo, registro, novoNoCriado);
-    int chaveQueVaiSubir = novoNoCriado->U.Externo.registros[0].chave;
-    No* novoNoInterno = criaNo(Interno);
-    novoNoInterno->U.Interno.chaves[0] = chaveQueVaiSubir;
-    novoNoInterno->U.Interno.apontadores[0] = (*pNo);
-    novoNoInterno->U.Interno.apontadores[1] = novoNoCriado;
-    (*pNo) = novoNoInterno;
+    arvoreInsereNaFolha(arvore, registro, novoNoCriado);
+    if (novoNoCriado != NULL) {
+      int chaveQueVaiSubir = novoNoCriado->U.Externo.registros[0].chave;
+      No* novoNoInterno = criaNo(Interno);
+      novoNoInterno->U.Interno.chaves[0] = chaveQueVaiSubir;
+      novoNoInterno->U.Interno.apontadores[0] = (*arvore);
+      novoNoInterno->U.Interno.apontadores[1] = novoNoCriado;
+      (*arvore) = novoNoInterno;
+    }
   }
   // Se nó for interno
   // Caminhar até o nó externo e voltar atualizando os ponteiros
+  else {
+    int indice;
+    for (indice = 0; indice < (*arvore)->U.Interno.qtdChaves; indice++) {
+      if (registro.chave < (*arvore)->U.Interno.chaves[indice]) {
+        break;
+      }
+    }
+    arvoreInsere(&(*arvore)->U.Interno.apontadores[indice], registro);
+  }
 }
 
 bool arvorePesquisa(ArvoreBEstrela pNo, int chave, Registro* registro) {

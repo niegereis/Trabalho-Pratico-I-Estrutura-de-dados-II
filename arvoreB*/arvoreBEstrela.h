@@ -23,7 +23,7 @@ typedef struct no {
     struct {
       int qtdChaves;
       int chaves[2 * M];
-      No* apontadores[2 * M + 1];
+      struct no* apontadores[2 * M + 1];
     } Interno;
     struct {
       int qtdRegistros;
@@ -36,5 +36,7 @@ ArvoreBEstrela arvoreCria();
 bool arvoreInsere(ArvoreBEstrela* pNo, Registro registro);
 bool arvorePesquisa(ArvoreBEstrela pNo, int chave, Registro* registro);
 bool arvoreImprime(ArvoreBEstrela pNo);
+No* criaNo(TipoDoNo tipo);
+void insercaoOrdenada(No* no, Registro registro, Registro* overflow);
 
 #endif  // ARVORE_B_ESTRELA

@@ -1,6 +1,5 @@
 #include "arvoreBEstrela.h"
 
-No* criaNo(TipoDoNo);
 No* ArvorePercorre(ArvoreBEstrela, int, int*);
 bool insereRegistro(No*, Registro);
 
