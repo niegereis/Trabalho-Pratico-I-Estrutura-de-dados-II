@@ -8,7 +8,7 @@ void printNo(No* no, Registro* overflow) {
          overflow != NULL ? overflow->chave : -5);
 }
 
-int main() {
+void testeInsercaoRegistroOrdenada() {
   No* no = criaNo(Externo);
   Registro overflow;
 
@@ -34,4 +34,9 @@ int main() {
   printNo(no, &overflow);
 
   return 0;
+}
+
+int main() {
+  No* no = criaNo(Interno);
+  No* filho1 = criaNo(Externo);
 }

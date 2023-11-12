@@ -29,7 +29,7 @@ No* ArvorePercorre(ArvoreBEstrela pNo, int chave, int* nivel) {
   }
 }
 
-void insercaoOrdenada(No* no, Registro registro, Registro* overflow) {
+void insercaoDeRegistroOrdenada(No* no, Registro registro, Registro* overflow) {
   int qtdRegistros = no->U.Externo.qtdRegistros;
   bool vetorCheio = qtdRegistros == 2 * M;
   Registro* registros = no->U.Externo.registros;
@@ -79,13 +79,52 @@ void insercaoOrdenada(No* no, Registro registro, Registro* overflow) {
   }
 }
 
+void insercaoDeChaveOrdenada(No* no, int chave, No* apontador,
+                             int* chaveOverflow, No* noOverflow) {
+  int qtdChaves = no->U.Interno.qtdChaves;
+  bool vetorCheio = qtdChaves == 2 * M;
+  int* chaves = no->U.Interno.chaves;
+  No** apontadores = no->U.Interno.apontadores;
+
+  if (vetorCheio) {
+    bool registroMaiorQueUltimaChave = chave > chaves[qtdChaves - 1];
+    if (registroMaiorQueUltimaChave) {
+      (*chaveOverflow) = chave;
+      noOverflow = apontador;
+      return;
+    }
+  }
+
+  int ultimaChave = chaves[qtdChaves - 1];
+  No* ultimoApontador = apontadores[qtdChaves];
+  int i;
+  for (i = qtdChaves - 2; i >= 0; i--) {
+    if (chave < chaves[i]) {
+      chaves[i + 1] = chaves[i];
+      apontadores[i + 2] = apontadores[i + 1];
+    } else {
+      break;
+    }
+  }
+  chaves[i + 1] = chave;
+
+  if (vetorCheio) {
+    (*chaveOverflow) = ultimaChave;
+    noOverflow = ultimoApontador;
+  } else {
+    chaves[no->U.Interno.qtdChaves] = ultimaChave;
+    apontadores[no->U.Interno.qtdChaves + 1] = apontadores;
+    no->U.Interno.qtdChaves++;
+  }
+}
+
 bool arvoreInsereNaFolha(ArvoreBEstrela* pNo, Registro registro, No* no) {
   if ((*pNo)->tipoNo == Externo) {
     if ((*pNo)->U.Externo.qtdRegistros < 2 * M) {
-      insercaoOrdenada(*pNo, registro, NULL);
+      insercaoDeRegistroOrdenada(*pNo, registro, NULL);
     } else {
       Registro registroComMaiorChave;
-      insercaoOrdenada(*pNo, registro, &registroComMaiorChave);
+      insercaoDeRegistroOrdenada(*pNo, registro, &registroComMaiorChave);
       No* pNoMaiores = criaNo(Externo);
       for (int i = M; i < 2 * M; i++) {
         pNoMaiores->U.Externo.registros[i - M] = (*pNo)->U.Externo.registros[i];
@@ -132,7 +171,8 @@ bool arvoreInsere(ArvoreBEstrela* arvore, Registro registro,
         break;
       }
     }
-    arvoreInsere(&(*arvore)->U.Interno.apontadores[indice], registro);
+    No* n;
+    arvoreInsere(&(*arvore)->U.Interno.apontadores[indice], registro, n);
   }
 }
 

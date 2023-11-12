@@ -33,10 +33,12 @@ typedef struct no {
 } No;
 
 ArvoreBEstrela arvoreCria();
-bool arvoreInsere(ArvoreBEstrela* pNo, Registro registro);
+bool arvoreInsere(ArvoreBEstrela* pNo, Registro registro, No* noCriado);
 bool arvorePesquisa(ArvoreBEstrela pNo, int chave, Registro* registro);
 bool arvoreImprime(ArvoreBEstrela pNo);
 No* criaNo(TipoDoNo tipo);
-void insercaoOrdenada(No* no, Registro registro, Registro* overflow);
+void insercaoDeRegistroOrdenada(No* no, Registro registro, Registro* overflow);
+void insercaoDeChaveOrdenada(No* no, int chave, No* apontador,
+                             int* chaveOverflow, No* noOverflow);
 
 #endif  // ARVORE_B_ESTRELA
