@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MM 4
+#define M 2
 
 typedef struct registro {
   int chave;
@@ -18,23 +18,23 @@ typedef enum { Interno, Externo } TipoDoNo;
 typedef struct no* ArvoreBEstrela;
 
 typedef struct no {
-  TipoDoNo Pt;
+  TipoDoNo tipoNo;
   union {
     struct {
       int qtdChaves;
-      int chaves[MM];
-      ArvoreBEstrela apontadores[MM + 1];
+      int chaves[2*M];
+      ArvoreBEstrela apontadores[2*M + 1];
     } Interno;
     struct {
       int qtdRegistros;
-      Registro registros[MM];
+      Registro registros[2*M];
     } Externo;
   } U;
 } No;
 
 ArvoreBEstrela arvoreCria();
-bool arvoreInsere(ArvoreBEstrela* arvore, Registro registro);
-bool arvorePesquisa(ArvoreBEstrela* arvore, int chave, Registro* registro);
-bool arvoreImprime(ArvoreBEstrela* arvore);
+bool arvoreInsere(ArvoreBEstrela pNo, Registro registro);
+bool arvorePesquisa(ArvoreBEstrela pNo, int chave, Registro* registro);
+bool arvoreImprime(ArvoreBEstrela pNo);
 
 #endif  // ARVORE_B_ESTRELA
