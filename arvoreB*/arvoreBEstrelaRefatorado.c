@@ -48,10 +48,11 @@ bool arvoreInsereRecursivo(ArvoreBEstrela* pNo, Registro registro, No* no) {
         pNoMaiores->U.Externo.registros[i - M] = (*pNo)->U.Externo.registros[i];
         pNoMaiores->U.Externo.qtdRegistros++;
       }
-      // TODO:  REVISAR
+      // TODO: REVISAR
       pNoMaiores->U.Externo.registros[M] = registroComMaiorChave;
+      pNoMaiores->U.Externo.qtdRegistros++;
 
-      (*pNo)->U.Externo.qtdRegistros -= pNoMaiores->U.Externo.qtdRegistros;
+      (*pNo)->U.Externo.qtdRegistros -= pNoMaiores->U.Externo.qtdRegistros - 1;
       no = pNoMaiores;
     }
     return true;
