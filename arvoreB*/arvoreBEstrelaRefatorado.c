@@ -102,7 +102,8 @@ bool arvoreInsereNaFolha(ArvoreBEstrela* pNo, Registro registro, No* no) {
   }
 }
 
-bool arvoreInsere(ArvoreBEstrela* arvore, Registro registro) {  // incompleto
+bool arvoreInsere(ArvoreBEstrela* arvore, Registro registro,
+                  No* noCriado) {  // incompleto
   if (arvore == NULL) {
     *arvore = criaNo(Externo);
     (*arvore)->U.Externo.registros[0] = registro;
