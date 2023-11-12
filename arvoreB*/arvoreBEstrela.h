@@ -22,18 +22,18 @@ typedef struct no {
   union {
     struct {
       int qtdChaves;
-      int chaves[2*M];
-      ArvoreBEstrela apontadores[2*M + 1];
+      int chaves[2 * M];
+      No* apontadores[2 * M + 1];
     } Interno;
     struct {
       int qtdRegistros;
-      Registro registros[2*M];
+      Registro registros[2 * M];
     } Externo;
   } U;
 } No;
 
 ArvoreBEstrela arvoreCria();
-bool arvoreInsere(ArvoreBEstrela pNo, Registro registro);
+bool arvoreInsere(ArvoreBEstrela* pNo, Registro registro);
 bool arvorePesquisa(ArvoreBEstrela pNo, int chave, Registro* registro);
 bool arvoreImprime(ArvoreBEstrela pNo);
 
