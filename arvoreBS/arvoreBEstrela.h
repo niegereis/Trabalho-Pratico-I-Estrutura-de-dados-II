@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define M 2
+#define M 1
 
 typedef struct registro {
   int chave;
@@ -33,12 +33,9 @@ typedef struct no {
 } No;
 
 ArvoreBEstrela arvoreCria();
-bool arvoreInsere(ArvoreBEstrela* pNo, Registro registro, No* noCriado);
+bool arvoreInsere(ArvoreBEstrela* pNo, Registro registro);
 bool arvorePesquisa(ArvoreBEstrela pNo, int chave, Registro* registro);
-bool arvoreImprime(ArvoreBEstrela pNo);
 No* criaNo(TipoDoNo tipo);
-void insercaoDeRegistroOrdenada(No* no, Registro registro, Registro* overflow);
-void insercaoDeChaveOrdenada(No* no, int chave, No* apontador,
-                             int* chaveOverflow, No* noOverflow);
+void insereRegistroOrdenado(No* no, Registro registro, Registro* overflow);
 
 #endif  // ARVORE_B_ESTRELA
