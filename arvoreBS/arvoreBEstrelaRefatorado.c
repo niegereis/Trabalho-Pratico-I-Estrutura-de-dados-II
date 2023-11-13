@@ -64,7 +64,19 @@ bool noCheio(No* no) {
                                : no->U.Externo.qtdRegistros >= 2 * M;
 }
 
+bool encontraRegistros(Registro* registros, int qtdRegistros, Registro r) {
+  for (int i = 0; i < qtdRegistros; i++) {
+    if (registros[i].chave == r.chave) return true;
+  }
+  return false;
+}
+
 bool arvoreInsereNaFolha(No* pNo, Registro registro, No** noExternoMaiores) {
+  if (encontraRegistros(pNo->U.Externo.registros, pNo->U.Externo.qtdRegistros,
+                        registro)) {
+    return false;
+  }
+
   if (noCheio(pNo)) {
     Registro overflow;
 
@@ -84,6 +96,7 @@ bool arvoreInsereNaFolha(No* pNo, Registro registro, No** noExternoMaiores) {
   } else {
     insereRegistroOrdenado(pNo, registro, NULL);
   }
+  return true;
 }
 
 int obtemChavePrimeiroElemento(No* n) {
@@ -195,6 +208,7 @@ bool arvoreInsereRecursiva(No** no, Registro registro, No** noMaiores,
       *noMaiores = novoNo;
     }
   }
+  return true;
 }
 
 bool arvoreInsere(ArvoreBEstrela* arvore, Registro registro) {  // incompleto

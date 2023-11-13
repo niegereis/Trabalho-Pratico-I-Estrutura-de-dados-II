@@ -3,7 +3,7 @@
 - Rodar o comando abaixo no terminal
 
 ```bash
-gcc -g ./arvoreBS/arvoreBEstrelaRefatorado.c ./arvoreBS/teste.c -o ./arvoreBS/teste && ./arvoreBS/teste
+gcc -g -lm ./arvoreBS/arvoreBEstrelaRefatorado.c ./arvoreBS/teste.c -o ./arvoreBS/teste && ./arvoreBS/teste
 
 ```
 
