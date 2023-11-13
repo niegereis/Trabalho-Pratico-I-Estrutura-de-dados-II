@@ -41,33 +41,39 @@ void testeInsercaoRegistroOrdenada() {
 
 void printTipoRaiz(ArvoreBEstrela arvore);
 
+void insere(ArvoreBEstrela* a, int reg) {
+  Registro r;
+  r.chave = reg;
+  arvoreInsere(a, r);
+}
+
 int main() {
   ArvoreBEstrela arvore = arvoreCria();
 
-  Registro r;
-  r.chave = 10;
-  arvoreInsere(&arvore, r);
-
-  r.chave = 20;
-  arvoreInsere(&arvore, r);
-
-  r.chave = 30;
-  arvoreInsere(&arvore, r);
-
-  r.chave = 40;
-  arvoreInsere(&arvore, r);
-
-  r.chave = 2;
-  arvoreInsere(&arvore, r);
-
-  r.chave = 15;
-  arvoreInsere(&arvore, r);
-
-  r.chave = 1;
-  arvoreInsere(&arvore, r);
-
-  r.chave = 0;
-  arvoreInsere(&arvore, r);
+  insere(&arvore, 15);
+  insere(&arvore, -7);
+  insere(&arvore, 40);
+  insere(&arvore, 2);
+  insere(&arvore, 10);
+  insere(&arvore, 30);
+  insere(&arvore, -2);
+  insere(&arvore, 45);
+  insere(&arvore, 50);
+  insere(&arvore, -7);
+  insere(&arvore, 55);
+  insere(&arvore, 60);
+  insere(&arvore, 70);
+  insere(&arvore, -2);
+  insere(&arvore, 70);
+  insere(&arvore, -1);
+  insere(&arvore, -10);
+  insere(&arvore, -20);
+  insere(&arvore, -40);
+  insere(&arvore, 45);
+  insere(&arvore, 50);
+  insere(&arvore, -20);
+  insere(&arvore, -70);
+  insere(&arvore, -1);
 
   arvoreImprime(arvore);
 
