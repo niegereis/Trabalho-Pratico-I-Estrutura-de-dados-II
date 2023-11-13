@@ -69,7 +69,26 @@ int main() {
   r.chave = 0;
   arvoreInsere(&arvore, r);
 
-  printTipoRaiz(arvore);
+  r.chave = 8;
+  arvoreInsere(&arvore, r);
+
+  r.chave = 100;
+  arvoreInsere(&arvore, r);
+
+  r.chave = -4;
+  arvoreInsere(&arvore, r);
+
+  r.chave = -1;
+  arvoreInsere(&arvore, r);
+
+  r.chave = -20;
+  arvoreInsere(&arvore, r);
+
+  r.chave = -40;
+  arvoreInsere(&arvore, r);
+
+  arvoreImprime(arvore);
+
   return 0;
 }
 

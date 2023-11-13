@@ -37,5 +37,6 @@ bool arvoreInsere(ArvoreBEstrela* pNo, Registro registro);
 bool arvorePesquisa(ArvoreBEstrela pNo, int chave, Registro* registro);
 No* criaNo(TipoDoNo tipo);
 void insereRegistroOrdenado(No* no, Registro registro, Registro* overflow);
+void arvoreImprime(ArvoreBEstrela arvore);
 
 #endif  // ARVORE_B_ESTRELA

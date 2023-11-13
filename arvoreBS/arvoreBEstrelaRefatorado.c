@@ -228,3 +228,16 @@ bool arvoreInsere(ArvoreBEstrela* arvore, Registro registro) {  // incompleto
     }
   }
 }
+
+void arvoreImprime(ArvoreBEstrela arvore) {
+  if (ehExterno(arvore)) {
+    for (int i = 0; i < arvore->U.Externo.qtdRegistros; i++) {
+      int chave = arvore->U.Externo.registros[i].chave;
+      printf("%d ", chave);
+    }
+  } else {
+    for (int i = 0; i < arvore->U.Interno.qtdChaves + 1; i++) {
+      arvoreImprime(arvore->U.Interno.apontadores[i]);
+    }
+  }
+}
