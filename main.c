@@ -8,7 +8,7 @@ int main(int argc, char *argv[]){
     int chave;
     int quantidade;
 
-    if (argc != 5){
+    if (argc != 5 && argc != 6){
         printf("Argumentos inválidos");
         exit(1);
     }
