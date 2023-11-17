@@ -21,12 +21,12 @@ int pesquisaMetodo(int metodo, int situacao, FILE *arquivo, int quantidade, Tipo
         /* arvore B* */
     }
     else {
-        printf("Inválido\n");
+        printf("Invalido\n");
     }
     
 }
 
-// numero de comparações - fazer 
+// numero de comparacões - fazer 
 
 int main(int argc, char *argv[]){
 
