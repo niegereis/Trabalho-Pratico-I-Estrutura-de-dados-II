@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 #define sizeOfDado2 5000
 
@@ -33,5 +34,7 @@ void PreOrdem (No *p);
 void PosOrdem (No *p);
 
 void Central(No*);
+
+void leArquivo(FILE*, int, int, Arvore, Item);
 
 #endif

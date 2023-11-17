@@ -4,6 +4,37 @@ void Arvore_Inicia(No** pRaiz) {
     *pRaiz = NULL ;
 }
 
+void leArquivo(FILE* arq, int situacao, int quantidade, Arvore arvore, Item x) {
+    int i=0;
+    if(situacao==1) {
+        arq = fopen("crescente.bin", "rb");
+        while((fread(&x, sizeof(Item), 1, arq) == 1) && i<quantidade) {
+            i++;
+            ArvoreInsere(&arvore, x);
+        }
+        fclose (arq);
+    }
+
+    if(situacao==2) {
+        arq = fopen("decrescente.bin", "rb");
+        while((fread(&x, sizeof(Item), 1, arq) == 1) && i<quantidade) {
+            i++;
+            ArvoreInsere(&arvore, x);
+        }
+        fclose (arq);
+    }
+
+    if(situacao==3) {
+        arq = fopen("aleatorio.bin", "rb");
+        while((fread(&x, sizeof(Item), 1, arq) == 1) && i<quantidade) {
+            i++;
+            ArvoreInsere(&arvore, x);
+        }
+        fclose (arq);
+    }
+
+}
+
 bool ArvorePesquisa(No* pRaiz , Chave c, Item *pX) {
     No *pAux ;
     pAux = pRaiz ;
