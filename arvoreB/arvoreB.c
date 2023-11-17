@@ -128,6 +128,7 @@ void Insere(TipoRegistro Reg, TipoApontador *Ap){
         ApTemp->n = 1;
         ApTemp->r[0] = RegRetorno;
         ApTemp->p[1] = ApRetorno;
-        ApTemp->p[0] = *Ap; *Ap = ApTemp;
+        ApTemp->p[0] = *Ap; 
+        *Ap = ApTemp;
     }
 }
