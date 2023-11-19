@@ -57,16 +57,31 @@ int main() {
   r.chave = 40;
   arvoreInsere(&arvore, r);
 
-  r.chave = 2;
+  r.chave = 50;
   arvoreInsere(&arvore, r);
 
-  r.chave = 15;
+  r.chave = 60;
   arvoreInsere(&arvore, r);
 
-  r.chave = 1;
+  r.chave = 70;
   arvoreInsere(&arvore, r);
 
-  r.chave = 0;
+  r.chave = 80;
+  arvoreInsere(&arvore, r);
+
+  r.chave = 90;
+  arvoreInsere(&arvore, r);
+
+  r.chave = 100;
+  arvoreInsere(&arvore, r);
+
+  r.chave = 120;
+  arvoreInsere(&arvore, r);
+
+  r.chave = 130;
+  arvoreInsere(&arvore, r);
+
+  r.chave = 140;
   arvoreInsere(&arvore, r);
 
   arvoreImprime(arvore);
