@@ -32,12 +32,20 @@ void Pesquisa(TipoRegistro*, TipoApontador, Analise*);
 
 void Imprime(TipoApontador);
 
-void InsereNaPagina (TipoApontador, TipoRegistro, TipoApontador);
+void InsereNaPagina (TipoApontador, TipoRegistro, TipoApontador, Analise*);
 
 void Ins (TipoRegistro, TipoApontador, short*, TipoRegistro*, TipoApontador*, Analise*);
 
 void Insere(TipoRegistro, TipoApontador*, Analise*);
 
-void leArquivo(FILE*, int, int, TipoApontador, TipoRegistro, Analise*);
+void leArquivo(FILE*, int, int, TipoApontador, Analise*);
+
+void arvoreB(Analise*, FILE*, TipoRegistro *, int , int, TipoApontador);
+
+void InicializaArvoreB (TipoApontador);
+
+void LiberaPagina(TipoApontador);
+
+void LiberaArvore(TipoApontador*);
 
 #endif
