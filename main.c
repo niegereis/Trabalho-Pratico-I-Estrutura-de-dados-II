@@ -1,30 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "arvoreB/arvoreB.h"
+#include "arvoreBinaria/arvoreBinaria.h"
 
 
-int pesquisaMetodo(int metodo, int situacao, FILE *arquivo, int quantidade, TipoApontador Ap, TipoRegistro reg){
+/*int pesquisaMetodo(int metodo, int situacao, FILE *arquivo, int quantidade, TipoApontador Ap, TipoRegistro reg){
 
     if (metodo == 1){
-        /*acesso sequencial*/
+        /*acesso sequencial
     }
     else if (metodo == 2){
-        /*arvore binaria*/
+        /*arvore binaria
     }
 
     else if (metodo ==3){
 
         leArquivo(arquivo, situacao, quantidade, Ap, reg);
-        /*arvore B*/
+        /*arvore B
     }
     else if (metodo == 4){
-        /* arvore B* */
+        /* arvore B* 
     }
     else {
         printf("Invalido\n");
     }
     
-}
+}*/
 
 // numero de comparacões - fazer 
 
@@ -65,9 +66,11 @@ int main(int argc, char *argv[]){
         exit(1);
     }
     
-    FILE *arquivo;
-
+    FILE* arquivo;
     //arquivo = arquivoSituacao(situacao);
+
+
+
 
 
     free(arquivo);
