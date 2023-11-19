@@ -1,15 +1,46 @@
 #include "arvoreB.h"
 #include "../metodos.h"
 
-/*Inicializando a arvore*/
-void InicializaArvoreB (TipoApontador Arvore, Analise* analise){
+/*A 2ª fase deste trabalho corresponde à análise experimental da complexidade de desempenho dos
+métodos mencionados, considerando as etapas de criação dos índices necessários, quando for o caso,
+e da própria pesquisa, por meio dos seguintes quesitos:
+ número de transferências (leitura) de itens da memória externa para a memória interna;
+ número de comparações entre chaves de pesquisa;
+ tempo de execução (tempo do término de execução menos o tempo do início de execução).
+
+Deve-se analisar, separadamente, as etapas de criação dos índices e da própria pesquisa quanto aos
+quesitos definidos. 
+*/
+
+void arvoreB(Analise *analise, FILE *arquivo, TipoRegistro *x, int situacao, int quantidade, TipoApontador Arvore){
+    clock_t inicio, fim;
+
+    TipoApontador *Arvore;
+    InicializaArvoreB(Arvore);
+    analise->comparacaoInsercao = 0;
+    analise->comparacaoPesquisa = 0;
+    analise->numeroTransferencia = 0; 
     
-    clock_t inicio = clock();
-    analise->comparacao = 0;
+    inicio = clock();
+    leArquivo(arquivo, situacao, quantidade, Arvore, analise);
+    fim = clock();
+    analise->comparacaoInsercao = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
+
+    inicio = clock();
+    Pesquisa(x, Arvore, analise);
+    fim = clock();
+    analise->comparacaoPesquisa = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
+
+    LiberaArvore(Arvore);
+}
+
+/*Inicializando a arvore*/
+void InicializaArvoreB (TipoApontador Arvore){
     Arvore = NULL;
 }
 
-void leArquivo(FILE* arq, int situacao, int quantidade, TipoApontador Arvore, TipoRegistro x, Analise* analise) {
+void leArquivo(FILE* arq, int situacao, int quantidade, TipoApontador Arvore, Analise* analise) {
+    TipoRegistro x;
     int i=0;
     if(situacao==1) {
         arq = fopen("crescente.bin", "rb");
@@ -39,40 +70,37 @@ void leArquivo(FILE* arq, int situacao, int quantidade, TipoApontador Arvore, Ti
     }
 
     analise->numeroTransferencia = i; 
-
 }
 
 // Função para pesquisar um item na árvore
 void Pesquisa(TipoRegistro *x, TipoApontador Ap, Analise* analise){
     long i = 1;
-
+     
     if (Ap == NULL){ // Se a árvore for vazia 
-        analise->comparacao++;
+        analise->comparacaoPesquisa++;
         printf("TipoRegistro nao esta presente na arvore\n");
         return;
     }
-    analise->comparacao++;
- 
+
+    analise->comparacaoPesquisa++;
     while (i < Ap->n &&x->Chave > Ap->r[i-1].Chave){
         i++; // incrementando o i
-        analise->comparacao++; // incrementa o número de comparações
+        analise->comparacaoPesquisa++; // incrementa o número de comparações
     }
     // quanto mais você procura por uma chave e compara com as outras pra ver se vc achou, sempre vai ter uma comparação
-    analise->comparacao++;
-
+   
+    analise->comparacaoPesquisa++;
     if (x->Chave == Ap->r[i-1].Chave){
         *x = Ap->r[i-1];
-        analise->comparacao++;
+        analise->comparacaoPesquisa++;
         return;
     }
 
-    analise->comparacao++;
+    analise->comparacaoPesquisa++;
     if (x->Chave < Ap->r[i-1].Chave){
-        analise->comparacao++;
         Pesquisa(x, Ap->p[i-1], analise); // chamada recursiva 
     }
     else {
-        analise->comparacao++;
         Pesquisa(x, Ap->p[i], analise);
     }
 }
@@ -101,7 +129,7 @@ void InsereNaPagina (TipoApontador Ap, TipoRegistro Reg, TipoApontador ApDir, An
     k = Ap->n; NaoAchouPosicao = (k > 0);
 
     while (NaoAchouPosicao){ // Enquanto não achamos a posição certa para inserir a chave
-        analise->comparacao++;
+        analise->comparacaoInsercao++;
         if (Reg.Chave >= Ap->r[k-1].Chave){ // Se a chave que a gente quer inserir for maior que a ultima chave de uma determinada página q
             NaoAchouPosicao = false; //  Achou a posição onde inserir
             break;
@@ -129,18 +157,20 @@ void Ins (TipoRegistro Reg, TipoApontador Ap, short *Cresceu, TipoRegistro *RegR
         return;
     }
 
-    while (i < Ap->n && Reg.Chave > Ap->r[i- 1].Chave) analise->comparacao++; i++; // Enquanto o valor de i for menor que o numero de itens dentro de uma página 
+    while (i < Ap->n && Reg.Chave > Ap->r[i- 1].Chave) analise->comparacaoInsercao++; i++; // Enquanto o valor de i for menor que o numero de itens dentro de uma página 
     // Enquanto o a chave que queremos inserir for maior que a chave que está na página, incrementa o i ate achar a posição onde o item tem q ser inserido
 
     if (Reg.Chave == Ap->r[i-1].Chave){ // Se esse item ja tiver na árvore, não vai ser colocado de novo, parando a recursão
         printf(" Erro: Registro ja esta presentei\n"); 
+        analise->comparacaoInsercao++;
         *Cresceu = false;
         return;
     }
-
-    if (Reg.Chave < Ap->r[i-1].Chave) i--; // Se a chave que queremos inserir for menor que a chave localizada, ou seja que o apontador ta apontadno a chave
+    analise->comparacaoInsercao++;
+    if (Reg.Chave < Ap->r[i-1].Chave) i--; // Se a chave que queremos inserir for menor que a chave localizada
     Ins (Reg, Ap->p[i], Cresceu, RegRetorno, ApRetorno, analise); // i volta a ter valor 1 
     if (!*Cresceu) return;
+    
     if (Ap->n < MM) /* Pagina tem espaco */
     {
         InsereNaPagina (Ap, *RegRetorno, *ApRetorno, analise); /* RegRetorno seria tipo o retorno do registro */
@@ -163,7 +193,8 @@ void Ins (TipoRegistro Reg, TipoApontador Ap, short *Cresceu, TipoRegistro *RegR
         InsereNaPagina(ApTemp, Ap->r[j-1],Ap->p[j], analise);
 
     Ap->n = M; ApTemp->p[0] = Ap->p[M+1];
-    *RegRetorno = Ap->r[M]; *ApRetorno = ApTemp;
+    *RegRetorno = Ap->r[M]; 
+    *ApRetorno = ApTemp;
 }
 
 void Insere(TipoRegistro Reg, TipoApontador *Ap, Analise *analise){
@@ -181,5 +212,21 @@ void Insere(TipoRegistro Reg, TipoApontador *Ap, Analise *analise){
         ApTemp->p[1] = ApRetorno;
         ApTemp->p[0] = *Ap; 
         *Ap = ApTemp;
+    }
+}
+
+void LiberaPagina(TipoApontador Ap){
+    if (Ap != NULL){
+        for (int i = 0; i <= Ap->n; i++){
+            LiberaPagina(Ap->p[i]); // Recursivamente libera os filhos
+        }
+        free(Ap); // Libera a memória da página
+    }
+}
+
+void LiberaArvore(TipoApontador *Arvore){
+    if (*Arvore != NULL){
+        LiberaPagina(*Arvore); // Inicia a liberação da árvore
+        *Arvore = NULL; // A árvore agora está vazia
     }
 }
