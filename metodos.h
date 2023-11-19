@@ -2,12 +2,9 @@
 #define METODOS_H
 
 typedef struct analise {
-
-    
-    int comparacao;
+    int comparacaoInsercao, comparacaoPesquisa;
     int numeroTransferencia;
-    double tempoFinal, tempoInicial;
-
+    double tempoPesquisa, tempoInsere;
 } Analise;
 
 
