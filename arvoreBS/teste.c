@@ -41,6 +41,12 @@ void testeInsercaoRegistroOrdenada() {
 
 void printTipoRaiz(ArvoreBEstrela arvore);
 
+void insere(ArvoreBEstrela* a, int reg) {
+  Registro r;
+  r.chave = reg;
+  arvoreInsere(a, r);
+}
+
 int main() {
   ArvoreBEstrela arvore = arvoreCria();
 
@@ -91,4 +97,91 @@ int main() {
 
 void printTipoRaiz(ArvoreBEstrela arvore) {
   printf("A arvore é %s", arvore->tipoNo == Interno ? "Interna" : "Externa");
+}
+
+void casoTeste(ArvoreBEstrela* arvore) {
+  Registro r;
+  r.chave = 10;
+  arvoreInsere(arvore, r);
+
+  r.chave = 20;
+  arvoreInsere(arvore, r);
+
+  r.chave = 30;
+  arvoreInsere(arvore, r);
+
+  r.chave = 40;
+  arvoreInsere(arvore, r);
+
+  r.chave = 2;
+  arvoreInsere(arvore, r);
+
+  r.chave = 15;
+  arvoreInsere(arvore, r);
+
+  r.chave = 1;
+  arvoreInsere(arvore, r);
+
+  r.chave = 0;
+  arvoreInsere(arvore, r);
+
+  r.chave = 8;
+  arvoreInsere(arvore, r);
+
+  r.chave = 100;
+  arvoreInsere(arvore, r);
+
+  r.chave = -4;
+  arvoreInsere(arvore, r);
+
+  r.chave = -1;
+  arvoreInsere(arvore, r);
+
+  r.chave = -20;
+  arvoreInsere(arvore, r);
+
+  r.chave = -40;
+  arvoreInsere(arvore, r);
+
+  r.chave = 10;
+  arvoreInsere(arvore, r);
+
+  r.chave = 20;
+  arvoreInsere(arvore, r);
+
+  r.chave = 30;
+  arvoreInsere(arvore, r);
+
+  r.chave = 40;
+  arvoreInsere(arvore, r);
+
+  r.chave = 2;
+  arvoreInsere(arvore, r);
+
+  r.chave = 15;
+  arvoreInsere(arvore, r);
+
+  r.chave = 1;
+  arvoreInsere(arvore, r);
+
+  r.chave = 0;
+  arvoreInsere(arvore, r);
+
+  r.chave = 8;
+  arvoreInsere(arvore, r);
+
+  r.chave = 100;
+  arvoreInsere(arvore, r);
+
+  r.chave = -4;
+  arvoreInsere(arvore, r);
+
+  r.chave = -1;
+  arvoreInsere(arvore, r);
+
+  r.chave = -20;
+  arvoreInsere(arvore, r);
+
+  r.chave = -40;
+  arvoreInsere(arvore, r);
 }

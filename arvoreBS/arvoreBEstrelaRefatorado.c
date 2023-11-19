@@ -132,6 +132,8 @@ bool arvoreInsereRecursiva(No** no, Registro registro, No** noMaiores,
     bool temEspaco = (*no)->U.Interno.qtdChaves < 2 * M;
     if (temEspaco) {
       int chaveElemQueSobe = obtemChavePrimeiroElemento(*noMaiores);
+      if (ehInterno(*noMaiores)) chaveElemQueSobe = *chaveS;
+
       int qtdElementosDoNo = obtemQuantidadeElementosDoNo(*no);
       int* chaves = obterChaves(*no);
       No** apontadores = obterApontadores(*no);
@@ -152,6 +154,7 @@ bool arvoreInsereRecursiva(No** no, Registro registro, No** noMaiores,
     } else {
       // cria um novo nó interno e splita
       int chaveElemQueSobe = obtemChavePrimeiroElemento(*noMaiores);
+      if (ehInterno(*noMaiores)) chaveElemQueSobe = *chaveS;
       No* apontadorDoElementoQueSobe = *noMaiores;
 
       int* chavesNoAtual = (*no)->U.Interno.chaves;
