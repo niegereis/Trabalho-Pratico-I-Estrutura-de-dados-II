@@ -3,6 +3,46 @@
 #include "arvoreB.h"
 //#include "arvoreBinaria.h"
 
+FILE *leArquivo(int situacao){
+
+    FILE *arquivo; 
+
+    if (situacao == 1){ //arquivo ordenado ascendente
+        arquivo = fopen("crescente.bin", "rb");
+        if (arquivo){
+            return arquivo;
+        }
+        else {
+            return NULL;
+        }
+
+    }
+    if (situacao == 2){ //arquivo ordenado ascendente
+        arquivo = fopen("decrescente.bin", "rb");
+        if (arquivo){
+            return arquivo;
+        }
+        else {
+            return NULL;
+        }
+
+    }
+
+    if (situacao == 3){ //arquivo ordenado ascendente
+        arquivo = fopen("aleatorio.bin", "rb");
+        if (arquivo){
+            return arquivo;
+        }
+        else {
+            return NULL;
+        }
+
+    }
+
+    else {
+        return NULL;
+    }
+}
 
 void pesquisaMetodo(int metodo, int situacao, FILE *arquivo, int quantidade, TipoApontador Ap, TipoRegistro reg, Analise *analise){
 
@@ -25,6 +65,8 @@ void pesquisaMetodo(int metodo, int situacao, FILE *arquivo, int quantidade, Tip
     }
     
 }
+
+
 
 // numero de comparacões - fazer 
 
@@ -73,7 +115,7 @@ int main(int argc, char *argv[]){
     
    // pesquisaMetodo(metodo, situacao, arquivo, quantidade, Ap,  reg, &analise);
 
-    FILE *arquivo;
+
 
     arquivo = leArquivo(situacao);
     pesquisaMetodo(metodo, situacao, arquivo, quantidade, Ap,  reg, &analise);
@@ -86,43 +128,3 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
-FILE *leArquivo(int situacao){
-
-    FILE *arquivo; 
-
-    if (situacao == 1){ //arquivo ordenado ascendente
-        arquivo = fopen("crescente.bin", "rb");
-        if (arquivo){
-            return arquivo;
-        }
-        else {
-            return NULL;
-        }
-
-    }
-    if (situacao == 2){ //arquivo ordenado ascendente
-        arquivo = fopen("decrescente.bin", "rb");
-        if (arquivo){
-            return arquivo;
-        }
-        else {
-            return NULL;
-        }
-
-    }
-
-    if (situacao == 3){ //arquivo ordenado ascendente
-        arquivo = fopen("aleatorio.bin", "rb");
-        if (arquivo){
-            return arquivo;
-        }
-        else {
-            return NULL;
-        }
-
-    }
-
-    else {
-        return NULL;
-    }
-}

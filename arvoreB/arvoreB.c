@@ -32,7 +32,7 @@ void arvoreB(Analise *analise, FILE *arquivo, TipoRegistro *reg, int situacao, i
     inicioInsere = clock();
     while((fread(&reg, sizeof(TipoRegistro), 1, arquivo) == 1) && i<quantidade) {
             i++;
-            Insere(*reg, Arvore, analise);
+            Insere(*reg, &Arvore, analise);
     }
     fimInsere = clock();
     analise->comparacaoInsercao = ((double)(fimInsere - inicioInsere)) / CLOCKS_PER_SEC;
@@ -42,7 +42,7 @@ void arvoreB(Analise *analise, FILE *arquivo, TipoRegistro *reg, int situacao, i
     fimPesquisa = clock();
     analise->comparacaoPesquisa = ((double)(fimPesquisa - inicioPesquisa)) / CLOCKS_PER_SEC;
 
-    LiberaArvore(Arvore);
+    LiberaArvore(&Arvore);
 }
 
 /*void leArquivo(FILE* arq, int situacao, int quantidade, TipoApontador Arvore, Analise* analise) {
@@ -111,7 +111,7 @@ void Pesquisa(TipoRegistro *x, TipoApontador Ap, Analise* analise){
     }
 }
 
-void Imprime(TipoApontador arvore){
+/*void Imprime(TipoApontador arvore){
     int i = 0;
 
     if (arvore == NULL) {
@@ -121,10 +121,10 @@ void Imprime(TipoApontador arvore){
     while (i <= arvore->n) {
         Imprime(arvore->p[i]);
         if (i != arvore->n)
-           printf("%d ", arvore->r[i].Chave); 
+           printf("%ld ", arvore->r[i].Chave); 
         i++;
     }
-}
+}*/
 
 
 // Inserir o registro dentro da página apontada por Ap
@@ -164,7 +164,9 @@ void Ins (TipoRegistro Reg, TipoApontador Ap, short *Cresceu, TipoRegistro *RegR
         return;
     }
 
-    while (i < Ap->n && Reg.Chave > Ap->r[i- 1].Chave) analise->comparacaoInsercao++; i++; // Enquanto o valor de i for menor que o numero de itens dentro de uma página 
+    while (i < Ap->n && Reg.Chave > Ap->r[i- 1].Chave) { 
+        analise->comparacaoInsercao++; i++;
+    } // Enquanto o valor de i for menor que o numero de itens dentro de uma página 
     // Enquanto o a chave que queremos inserir for maior que a chave que está na página, incrementa o i ate achar a posição onde o item tem q ser inserido
 
     if (Reg.Chave == Ap->r[i-1].Chave){ // Se esse item ja tiver na árvore, não vai ser colocado de novo, parando a recursão
@@ -209,7 +211,7 @@ void Insere(TipoRegistro Reg, TipoApontador *Ap, Analise *analise){
     TipoRegistro RegRetorno;
     TipoPagina *ApRetorno, *ApTemp;
 
-    Ins (Reg, *Ap, &Cresceu, &RegRetorno, &ApRetorno, &analise);
+    Ins (Reg, *Ap, &Cresceu, &RegRetorno, &ApRetorno, analise);
 
     if (Cresceu) /* Arvore cresce na altura pela raiz */
     {
