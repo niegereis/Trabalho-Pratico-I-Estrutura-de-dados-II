@@ -17,7 +17,8 @@ void InicializaArvoreB (TipoApontador Arvore){
     Arvore = NULL;
 }
 
-void arvoreB(Analise *analise, FILE *arquivo, TipoRegistro *reg, int situacao, int quantidade, TipoApontador Arvore, int operacao){
+void arvoreB(Analise *analise, FILE *arquivo, TipoRegistro *reg, int situacao, int quantidade, int operacao){
+    TipoApontador Arvore;
     clock_t inicioInsere, fimInsere;
     clock_t inicioPesquisa, fimPesquisa;
 

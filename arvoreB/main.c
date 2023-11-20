@@ -45,7 +45,7 @@ FILE *leArquivo(int situacao){
     }
 }
 
-void pesquisaMetodo(int metodo, int situacao, FILE *arquivo, int quantidade, TipoApontador Ap, TipoRegistro reg, int operacao, Analise *analise, int chave){
+void pesquisaMetodo(int metodo, int situacao, FILE *arquivo, int quantidade, TipoRegistro reg, int operacao, Analise *analise, int chave){
 
     if (metodo == 1){
         //acesso sequencial
@@ -56,7 +56,7 @@ void pesquisaMetodo(int metodo, int situacao, FILE *arquivo, int quantidade, Tip
 
     else if (metodo ==3){
 
-        arvoreB(analise, arquivo, &reg, situacao, quantidade, Ap, operacao);
+        arvoreB(analise, arquivo, &reg, situacao, quantidade, operacao);
     }
     else if (metodo == 4){
         //arvore B* 
@@ -83,8 +83,7 @@ int main(int argc, char *argv[]){
     FILE* arquivo;
     Analise analise;
     TipoRegistro reg;
-    TipoApontador Ap; 
-
+   
     if (argc != 5 && argc != 6){
         printf("Argumentos inválidos");
         exit(1);
@@ -127,7 +126,7 @@ int main(int argc, char *argv[]){
 
             operacao = 1;
             arquivo = leArquivo(situacao);
-            pesquisaMetodo(metodo, situacao, arquivo, quantidade, Ap,  reg, operacao, &analise, chave);
+            pesquisaMetodo(metodo, situacao, arquivo, quantidade, reg, operacao, &analise, chave);
 
         }
 
@@ -135,10 +134,7 @@ int main(int argc, char *argv[]){
     
    // pesquisaMetodo(metodo, situacao, arquivo, quantidade, Ap,  reg, &analise);
     arquivo = leArquivo(situacao);
-    pesquisaMetodo(metodo, situacao, arquivo, quantidade, Ap,  reg, operacao, &analise, chave);
-
-
-
+    pesquisaMetodo(metodo, situacao, arquivo, quantidade, reg, operacao, &analise, chave);
 
 
     fclose(arquivo);

@@ -40,7 +40,7 @@ void Insere(TipoRegistro, TipoApontador*, Analise*);
 
 //void leArquivo(FILE*, int, int, TipoApontador*, Analise*);
 
-void arvoreB(Analise*, FILE*, TipoRegistro *, int , int, TipoApontador, int);
+void arvoreB(Analise*, FILE*, TipoRegistro *, int , int, int);
 
 void InicializaArvoreB (TipoApontador);
 
