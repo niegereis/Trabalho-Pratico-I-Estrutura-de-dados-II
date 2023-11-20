@@ -18,19 +18,50 @@ void imprimirArvore(FILE* arvoreBinaria) {
 }
 
 
-void PesquisaExterna(FILE* arq, FILE* arvoreBinaria, int situacao, int quantidade) {
+long PesquisaExt(FILE* arvoreBinaria, long chave, NoExt noAnt) {
+    fseek(arvoreBinaria, 0, 0);
+
+    int i=0;
+    while(fread(&noAnt, sizeof(NoExt), 1, arvoreBinaria) == 1) {
+        if(chave != noAnt.item.chave) {
+            if((chave > noAnt.item.chave)) {
+                
+                fseek(arvoreBinaria, (sizeof(NoExt) * (noAnt.pDir-1)), 0);    
+                i = noAnt.pDir;
+            }
+
+            if((chave < noAnt.item.chave)) {
+                
+                fseek(arvoreBinaria, (sizeof(NoExt) * (noAnt.pEsq-1)), 0);    
+                i = noAnt.pEsq;
+            }
+        }
+
+        if(noAnt.item.chave == chave) {
+            if(i==0) {
+                return 1;
+            }
+            return i;
+        }
+    } 
+    
+    printf("O valor não se encontra no arquivo.\n");
+    return 0;
+}
+
+void ArvoreCria(FILE* arq, FILE* arvoreBinaria, int situacao, int quantidade) {
 
     if (arvoreBinaria == NULL || arq == NULL) {
         printf("Erro ao abrir os arquivos.\n");
         return; // Ou tome a ação apropriada em caso de erro.
     }
     
-    int j=1;
+    long j=1;
     NoExt no1;
     NoExt noAnt;
     Item x;
     int vdd = 0;
-    int i = 0;
+    long i = 0;
     /*arvoreBinaria = fopen("arvoreExt.bin", "w+b");
 
     if(situacao==1) {
@@ -49,7 +80,6 @@ void PesquisaExterna(FILE* arq, FILE* arvoreBinaria, int situacao, int quantidad
         no1.pDir = -1;
         no1.pEsq = -1;
 
-        imprimirArvore(arvoreBinaria);
         fseek(arvoreBinaria, 0, SEEK_SET);
         
         vdd = 0;
@@ -59,13 +89,10 @@ void PesquisaExterna(FILE* arq, FILE* arvoreBinaria, int situacao, int quantidad
                 if(no1.item.chave < noAnt.item.chave) {
 
                     if(noAnt.pEsq == -1) {
-                        printf("Esquerda é -1\n");
-                        
                         noAnt.pEsq = j;
+                        j++;
                         fseek(arvoreBinaria, (sizeof(NoExt)*-1), 1);
                         fwrite(&noAnt, sizeof(NoExt), 1, arvoreBinaria);
-                        
-                        j++;
 
                         fseek(arvoreBinaria, 0, SEEK_END);
                         fwrite(&no1, sizeof(NoExt), 1, arvoreBinaria); 
@@ -73,7 +100,8 @@ void PesquisaExterna(FILE* arq, FILE* arvoreBinaria, int situacao, int quantidad
                         vdd = 1;
                     }
                     else {
-                        fseek(arvoreBinaria, (sizeof(NoExt) * noAnt.pEsq), 0);
+                        fseek(arvoreBinaria, 0, SEEK_SET);
+                        fseek(arvoreBinaria, (sizeof(NoExt) * (noAnt.pEsq-1)), 0);
                     }
                 }
 
@@ -92,7 +120,8 @@ void PesquisaExterna(FILE* arq, FILE* arvoreBinaria, int situacao, int quantidad
 
                     }
                     else {
-                        fseek(arvoreBinaria, (sizeof(NoExt) * noAnt.pDir), 0);
+                        fseek(arvoreBinaria, 0, SEEK_SET);
+                        fseek(arvoreBinaria, (sizeof(NoExt) * (noAnt.pDir-1)), 0);
                     }
                 }
             }

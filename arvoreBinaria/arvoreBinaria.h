@@ -43,7 +43,7 @@ void PosOrdem (No *p);
 void Central(No*);*/
 
 void imprimirArvore(FILE*);
-
-void PesquisaExterna(FILE*, FILE*, int, int);
+long PesquisaExt(FILE*, long, NoExt);
+void CriaArvore(FILE*, FILE*, int, int);
 
 #endif
