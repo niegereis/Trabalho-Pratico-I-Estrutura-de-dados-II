@@ -67,6 +67,15 @@ void pesquisaMetodo(int metodo, int situacao, FILE *arquivo, int quantidade, Tip
     
 }
 
+void mostraAnalise(Analise *analise){
+    printf("Análise dos métodos: \n");
+    printf("Números de comparações pesquisa: %d\n", analise->comparacaoPesquisa);
+    printf("Número de comparações inserção: %d\n", analise->comparacaoInsercao);
+    printf("Tempo de Execução:\n - Pesquisa: %.2lf\n", analise->tempoPesquisa);
+    printf("\n -Inserção: %.2lf", analise->tempoInsere);
+    printf("Número de transferências: %d\n", analise->numeroTransferencia);
+}
+
 
 
 // numero de comparacões - fazer 
