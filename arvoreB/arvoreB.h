@@ -38,11 +38,11 @@ void Ins (TipoRegistro, TipoApontador, short*, TipoRegistro*, TipoApontador*, An
 
 void Insere(TipoRegistro, TipoApontador*, Analise*);
 
-void leArquivo(FILE*, int, int, TipoApontador, Analise*);
+void leArquivo(FILE*, int, int, TipoApontador*, Analise*);
 
-void arvoreB(Analise*, FILE*, TipoRegistro *, int , int, TipoApontador);
+void arvoreB(Analise*, FILE*, TipoRegistro *, int , int, TipoApontador*);
 
-void InicializaArvoreB (TipoApontador);
+void InicializaArvoreB (TipoApontador*);
 
 void LiberaPagina(TipoApontador);
 

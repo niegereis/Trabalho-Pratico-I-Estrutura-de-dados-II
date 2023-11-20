@@ -17,7 +17,7 @@ void arvoreB(Analise *analise, FILE *arquivo, TipoRegistro *x, int situacao, int
     clock_t inicioInsere, fimInsere;
     clock_t inicioPesquisa, fimPesquisa;
 
-    TipoApontador *Arvore;
+    //TipoApontador *Arvore;
     InicializaArvoreB(Arvore);
     analise->comparacaoInsercao = 0;
     analise->comparacaoPesquisa = 0;
@@ -41,7 +41,7 @@ void InicializaArvoreB (TipoApontador Arvore){
     Arvore = NULL;
 }
 
-void leArquivo(FILE* arq, int situacao, int quantidade, TipoApontador Arvore, Analise* analise) {
+/*void leArquivo(FILE* arq, int situacao, int quantidade, TipoApontador Arvore, Analise* analise) {
     TipoRegistro x;
     int i=0;
     if(situacao==1) {
@@ -72,7 +72,7 @@ void leArquivo(FILE* arq, int situacao, int quantidade, TipoApontador Arvore, An
     }
 
     analise->numeroTransferencia = i; 
-}
+}*/
 
 // Função para pesquisar um item na árvore
 void Pesquisa(TipoRegistro *x, TipoApontador Ap, Analise* analise){
