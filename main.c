@@ -4,28 +4,27 @@
 #include "arvoreBinaria/arvoreBinaria.h"
 
 
-/*int pesquisaMetodo(int metodo, int situacao, FILE *arquivo, int quantidade, TipoApontador Ap, TipoRegistro reg){
+void pesquisaMetodo(int metodo, int situacao, FILE *arquivo, int quantidade, TipoApontador Ap, TipoRegistro reg, Analise *analise){
 
     if (metodo == 1){
-        /*acesso sequencial
+        //acesso sequencial
     }
     else if (metodo == 2){
-        /*arvore binaria
+        //arvore binaria
     }
 
     else if (metodo ==3){
 
-        leArquivo(arquivo, situacao, quantidade, Ap, reg);
-        /*arvore B
+        arvoreB(analise, arquivo, &reg, situacao, quantidade, Ap);
     }
     else if (metodo == 4){
-        /* arvore B* 
+        //arvore B* 
     }
     else {
         printf("Invalido\n");
     }
     
-}*/
+}
 
 // numero de comparacões - fazer 
 
@@ -67,7 +66,7 @@ int main(int argc, char *argv[]){
     }
     
     FILE* arquivo;
-    //arquivo = arquivoSituacao(situacao);
+    
 
 
 

@@ -12,8 +12,10 @@ Deve-se analisar, separadamente, as etapas de criação dos índices e da própr
 quesitos definidos. 
 */
 
+
 void arvoreB(Analise *analise, FILE *arquivo, TipoRegistro *x, int situacao, int quantidade, TipoApontador Arvore){
-    clock_t inicio, fim;
+    clock_t inicioInsere, fimInsere;
+    clock_t inicioPesquisa, fimPesquisa;
 
     TipoApontador *Arvore;
     InicializaArvoreB(Arvore);
@@ -21,15 +23,15 @@ void arvoreB(Analise *analise, FILE *arquivo, TipoRegistro *x, int situacao, int
     analise->comparacaoPesquisa = 0;
     analise->numeroTransferencia = 0; 
     
-    inicio = clock();
+    inicioInsere = clock();
     leArquivo(arquivo, situacao, quantidade, Arvore, analise);
-    fim = clock();
-    analise->comparacaoInsercao = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
+    fimInsere = clock();
+    analise->comparacaoInsercao = ((double)(fimInsere - inicioInsere)) / CLOCKS_PER_SEC;
 
-    inicio = clock();
+    inicioPesquisa = clock();
     Pesquisa(x, Arvore, analise);
-    fim = clock();
-    analise->comparacaoPesquisa = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
+    fimPesquisa = clock();
+    analise->comparacaoPesquisa = ((double)(fimPesquisa - inicioPesquisa)) / CLOCKS_PER_SEC;
 
     LiberaArvore(Arvore);
 }
@@ -137,7 +139,8 @@ void InsereNaPagina (TipoApontador Ap, TipoRegistro Reg, TipoApontador ApDir, An
         Ap->r[k] = Ap->r[k-1];
         Ap->p[k+1] = Ap->p[k];
         k--;
-        if (k < 1) NaoAchouPosicao = false;
+        if (k < 1) 
+        NaoAchouPosicao = false;
     }
 
     Ap->r[k] = Reg;
