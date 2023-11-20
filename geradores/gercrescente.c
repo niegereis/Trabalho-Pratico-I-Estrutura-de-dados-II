@@ -4,7 +4,7 @@
 #include <string.h>
 #include <time.h>
 
-#define TAM 10
+#define TAM 2000000
 
 typedef struct registro {
   int chave;
@@ -16,7 +16,7 @@ int main() {
   srand(time(NULL));
   Registro registro;
   FILE* arquivo = fopen("crescente.bin", "wb+");
-  FILE* arquivoTxt = fopen("_crescente.txt", "w");
+  FILE* arquivoTxt = fopen("crescente.txt", "w");
 
   int inseridos = 0, i = 0;
   while (inseridos < TAM) {
