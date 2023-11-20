@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define M 1
+#define M 2
 
 typedef struct registro {
   int chave;

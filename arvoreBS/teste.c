@@ -49,31 +49,46 @@ void insere(ArvoreBEstrela* a, int reg) {
 
 int main() {
   ArvoreBEstrela arvore = arvoreCria();
-  casoTeste(&arvore);
-  // insere(&arvore, 15);
-  // insere(&arvore, -7);
-  // insere(&arvore, 40);
-  // insere(&arvore, 2);
-  // insere(&arvore, 10);
-  // insere(&arvore, 30);
-  // insere(&arvore, -2);
-  // insere(&arvore, 45);
-  // insere(&arvore, 50);
-  // insere(&arvore, -7);
-  // insere(&arvore, 55);
-  // insere(&arvore, 60);
-  // insere(&arvore, 70);
-  // insere(&arvore, -2);
-  // insere(&arvore, 70);
-  // insere(&arvore, -1);
-  // insere(&arvore, -10);
-  // insere(&arvore, -20);
-  // insere(&arvore, -40);
-  // insere(&arvore, 45);
-  // insere(&arvore, 50);
-  // insere(&arvore, -20);
-  // insere(&arvore, -70);
-  // insere(&arvore, -1);
+
+  Registro r;
+  r.chave = 10;
+  arvoreInsere(&arvore, r);
+
+  r.chave = 20;
+  arvoreInsere(&arvore, r);
+
+  r.chave = 30;
+  arvoreInsere(&arvore, r);
+
+  r.chave = 40;
+  arvoreInsere(&arvore, r);
+
+  r.chave = 50;
+  arvoreInsere(&arvore, r);
+
+  r.chave = 60;
+  arvoreInsere(&arvore, r);
+
+  r.chave = 70;
+  arvoreInsere(&arvore, r);
+
+  r.chave = 80;
+  arvoreInsere(&arvore, r);
+
+  r.chave = 90;
+  arvoreInsere(&arvore, r);
+
+  r.chave = 100;
+  arvoreInsere(&arvore, r);
+
+  r.chave = 120;
+  arvoreInsere(&arvore, r);
+
+  r.chave = 130;
+  arvoreInsere(&arvore, r);
+
+  r.chave = 140;
+  arvoreInsere(&arvore, r);
 
   arvoreImprime(arvore);
 

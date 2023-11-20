@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 #define sizeOfDado2 5000
 
@@ -20,9 +21,16 @@ typedef struct no {
     struct no* pDir;
 } No;
 
+typedef struct {
+    Item item;
+    int pEsq;
+    int pDir;
+} NoExt;
+
+
 typedef No* Arvore ;
 
-void Arvore_Inicia(No**);
+/*void Arvore_Inicia(No**);
 
 bool ArvorePesquisa(No*, Chave, Item*);
 
@@ -32,6 +40,10 @@ void PreOrdem (No *p);
 
 void PosOrdem (No *p);
 
-void Central(No*);
+void Central(No*);*/
+
+void imprimirArvore(FILE*);
+long PesquisaExt(FILE*, long, NoExt);
+void CriaArvore(FILE*, FILE*, int, int);
 
 #endif
