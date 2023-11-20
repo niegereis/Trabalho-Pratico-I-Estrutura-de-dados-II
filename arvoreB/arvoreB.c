@@ -13,8 +13,8 @@ quesitos definidos.
 */
 
 /*Inicializando a arvore*/
-void InicializaArvoreB (TipoApontador Arvore){
-    Arvore = NULL;
+void InicializaArvoreB (TipoApontador *Arvore){
+    *Arvore = NULL;
 }
 
 void arvoreB(Analise *analise, FILE *arquivo, TipoRegistro *reg, int situacao, int quantidade, int operacao){
@@ -23,7 +23,7 @@ void arvoreB(Analise *analise, FILE *arquivo, TipoRegistro *reg, int situacao, i
     clock_t inicioPesquisa, fimPesquisa;
 
     //TipoApontador *Arvore;
-    InicializaArvoreB(Arvore);
+    InicializaArvoreB(&Arvore);
     analise->comparacaoInsercao = 0;
     analise->comparacaoPesquisa = 0;
     analise->numeroTransferencia = 0; 
@@ -50,38 +50,7 @@ void arvoreB(Analise *analise, FILE *arquivo, TipoRegistro *reg, int situacao, i
     LiberaArvore(&Arvore);
 }
 
-/*void leArquivo(FILE* arq, int situacao, int quantidade, TipoApontador Arvore, Analise* analise) {
-    TipoRegistro x;
-    int i=0;
-    if(situacao==1) {
-        arq = fopen("crescente.bin", "rb");
-        while((fread(&x, sizeof(TipoRegistro), 1, arq) == 1) && i<quantidade) {
-            i++;
-            Insere(x, Arvore, analise);
-        }
-        fclose (arq);
-    }
 
-    if(situacao==2) {
-        arq = fopen("decrescente.bin", "rb");
-        while((fread(&x, sizeof(TipoRegistro), 1, arq) == 1) && i<quantidade) {
-            i++;
-            Insere(x, Arvore, analise);
-        }
-        fclose (arq);
-    }
-
-    if(situacao==3) {
-        arq = fopen("aleatorio.bin", "rb");
-        while((fread(&x, sizeof(TipoRegistro), 1, arq) == 1) && i<quantidade) {
-            i++;
-            Insere(x, Arvore, analise);
-        }
-        fclose (arq);
-    }
-
-    analise->numeroTransferencia = i; 
-}*/
 
 // Função para pesquisar um item na árvore
 void Pesquisa(TipoRegistro *x, TipoApontador Ap, Analise* analise){

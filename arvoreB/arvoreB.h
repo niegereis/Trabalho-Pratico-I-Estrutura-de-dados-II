@@ -42,7 +42,7 @@ void Insere(TipoRegistro, TipoApontador*, Analise*);
 
 void arvoreB(Analise*, FILE*, TipoRegistro *, int , int, int);
 
-void InicializaArvoreB (TipoApontador);
+void InicializaArvoreB (TipoApontador*);
 
 void LiberaPagina(TipoApontador);
 
