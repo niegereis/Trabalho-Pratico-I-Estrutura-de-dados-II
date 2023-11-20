@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "arvoreB.h"
+#include <string.h>
 //#include "arvoreBinaria.h"
 
 FILE *leArquivo(int situacao){
@@ -44,7 +45,7 @@ FILE *leArquivo(int situacao){
     }
 }
 
-void pesquisaMetodo(int metodo, int situacao, FILE *arquivo, int quantidade, TipoApontador Ap, TipoRegistro reg, Analise *analise){
+void pesquisaMetodo(int metodo, int situacao, FILE *arquivo, int quantidade, TipoApontador Ap, TipoRegistro reg, int operacao, Analise *analise, int chave){
 
     if (metodo == 1){
         //acesso sequencial
@@ -55,7 +56,7 @@ void pesquisaMetodo(int metodo, int situacao, FILE *arquivo, int quantidade, Tip
 
     else if (metodo ==3){
 
-        arvoreB(analise, arquivo, &reg, situacao, quantidade, Ap);
+        arvoreB(analise, arquivo, &reg, situacao, quantidade, Ap, operacao);
     }
     else if (metodo == 4){
         //arvore B* 
@@ -76,7 +77,13 @@ int main(int argc, char *argv[]){
     int situacao; // aleotaria, crescente ou descendente 
     int chave;
     int quantidade;
+    int operacao;
     
+
+    FILE* arquivo;
+    Analise analise;
+    TipoRegistro reg;
+    TipoApontador Ap; 
 
     if (argc != 5 && argc != 6){
         printf("Argumentos inválidos");
@@ -87,6 +94,7 @@ int main(int argc, char *argv[]){
     situacao = atoi(argv[3]);
     chave = atoi(argv[4]);
     metodo = atoi(argv[1]);
+    
 
     if (metodo < 1 || metodo > 4){
         printf("Número de métodos inválido\n");
@@ -108,17 +116,26 @@ int main(int argc, char *argv[]){
         exit(1);
     }
 
-    FILE* arquivo;
-    Analise analise;
-    TipoRegistro reg;
-    TipoApontador Ap; 
+    if (argc == 6) {
+        if (strcmp(argv[5], "-P") != 0){
+            printf("Argumento inválido\n");
+
+            exit(1);
+        }
+
+        else {
+
+            operacao = 1;
+            arquivo = leArquivo(situacao);
+            pesquisaMetodo(metodo, situacao, arquivo, quantidade, Ap,  reg, operacao, &analise, chave);
+
+        }
+
+    }
     
    // pesquisaMetodo(metodo, situacao, arquivo, quantidade, Ap,  reg, &analise);
-
-
-
     arquivo = leArquivo(situacao);
-    pesquisaMetodo(metodo, situacao, arquivo, quantidade, Ap,  reg, &analise);
+    pesquisaMetodo(metodo, situacao, arquivo, quantidade, Ap,  reg, operacao, &analise, chave);
 
 
 

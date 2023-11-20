@@ -17,7 +17,7 @@ void InicializaArvoreB (TipoApontador Arvore){
     Arvore = NULL;
 }
 
-void arvoreB(Analise *analise, FILE *arquivo, TipoRegistro *reg, int situacao, int quantidade, TipoApontador Arvore){
+void arvoreB(Analise *analise, FILE *arquivo, TipoRegistro *reg, int situacao, int quantidade, TipoApontador Arvore, int operacao){
     clock_t inicioInsere, fimInsere;
     clock_t inicioPesquisa, fimPesquisa;
 
@@ -31,8 +31,12 @@ void arvoreB(Analise *analise, FILE *arquivo, TipoRegistro *reg, int situacao, i
     
     inicioInsere = clock();
     while((fread(&reg, sizeof(TipoRegistro), 1, arquivo) == 1) && i<quantidade) {
-            i++;
-            Insere(*reg, &Arvore, analise);
+        if (operacao == 1){
+            printf("Chave %ld\n", reg->Chave);
+        }
+        i++;
+        Insere(*reg, &Arvore, analise);
+            
     }
     fimInsere = clock();
     analise->comparacaoInsercao = ((double)(fimInsere - inicioInsere)) / CLOCKS_PER_SEC;
