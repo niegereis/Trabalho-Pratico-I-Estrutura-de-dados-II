@@ -24,9 +24,9 @@ void imprimeAnalise(Analise an) {
 }
 
 void pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
-                    bool exibirRegistros) {
-  Analise analise;
-  analiseInicia(&analise);
+                    bool exibirRegistros, Analise* analise,
+                    bool imprimirRelatorio) {
+  analiseInicia(analise);
   Registro encontrado;
   short achou = 0;
   FILE* arquivo;
@@ -64,21 +64,21 @@ void pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
 
   switch (metodo) {
     case 1:  // sequencial
-      encontrado = acessoSequencialIndexado(&analise, chave, &achou, arquivo,
-                                            quantidade);
+      encontrado =
+          acessoSequencialIndexado(analise, chave, &achou, arquivo, quantidade);
       printf("   %d   ", achou);
       break;
 
     case 2:  // arvore binaria
-      encontrado = arvoreBinaria(&analise, chave, &achou, arquivo, quantidade);
+      encontrado = arvoreBinaria(analise, chave, &achou, arquivo, quantidade);
       break;
 
     case 3:  // arvore b
-      encontrado = arvoreB(&analise, chave, &achou, arquivo, quantidade);
+      encontrado = arvoreB(analise, chave, &achou, arquivo, quantidade);
       break;
 
     case 4:  // arvore b*
-      encontrado = arvoreBEstrela(&analise, chave, &achou, arquivo, quantidade);
+      encontrado = arvoreBEstrela(analise, chave, &achou, arquivo, quantidade);
       break;
 
     default:
@@ -88,11 +88,13 @@ void pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
 
   fclose(arquivo);
 
-  if (achou == 1) {
-    imprimeRegistro(encontrado);
-    imprimeAnalise(analise);
-  } else
-    printf("nope\n");
+  if (imprimirRelatorio) {
+    if (achou == 1) {
+      imprimeRegistro(encontrado);
+      imprimeAnalise(*analise);
+    } else
+      printf("nope\n");
+  }
 }
 
 void imprimirArquivoBinario(FILE* file, int quantidade) {

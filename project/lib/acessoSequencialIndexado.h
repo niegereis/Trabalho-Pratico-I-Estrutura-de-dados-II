@@ -3,8 +3,8 @@
 
 #include "compartilhado.h"
 
-#define ITENS_PAGINA 6
-#define QTD_ITENS_A_SER_LIDOS 2
+#define ITENS_PAGINA 1000
+#define QTD_ITENS_A_SER_LIDOS 1000
 
 typedef struct itemIndice {
   int posicao;

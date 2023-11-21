@@ -66,7 +66,6 @@ bool buscaRegistroNaPagina(int chave, Registro* registro, ItemIndice indice,
                           arquivoDeRegitros)) > 0 &&
          j * QTD_ITENS_A_SER_LIDOS < ITENS_PAGINA) {
     j++;
-    analise->comparacaoPesquisa++;
 
     for (int i = 0; i < qtdItem; i++) {
       if (chave == registros[i].chave) {
