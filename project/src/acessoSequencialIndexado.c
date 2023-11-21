@@ -79,15 +79,18 @@ bool pesquisaSequencial(int chave, Registro* registro, FILE* arquivoDeRegistros,
 
   bool fimDoArquivoIndexPrincipal = false;
   ItemIndice ultimoItemDaPagina;
+  ItemIndice itensDoArquivoIndex[QTD_ITENS_A_SER_LIDOS];
+
+  //o arquivo index é lido antes de entrar no loop para verificar se a chave procurada é menor do que a menor chave no arquivo
+  int qtdItensLidos = fread(itensDoArquivoIndex, sizeof(ItemIndice), QTD_ITENS_A_SER_LIDOS, arquivoDeIndex); // é carregado uma parte do arquivo contendo os índices de pesquisa
+  analise->transferenciaPesquisa++;
+  analise->comparacaoPesquisa++;
+  if(chave < itensDoArquivoIndex[0].chave) return false;
 
   while (!fimDoArquivoIndexPrincipal) {
-    ItemIndice itensDoArquivoIndex[QTD_ITENS_A_SER_LIDOS];
-    int qtdItensLidos = fread(itensDoArquivoIndex, sizeof(ItemIndice),
-                              QTD_ITENS_A_SER_LIDOS, arquivoDeIndex);
-    analise->transferenciaPesquisa++;
+                      
     if (qtdItensLidos == 0) {
-      return buscaRegistroNaPagina(chave, registro, ultimoItemDaPagina,
-                                   arquivoDeRegistros, analise);
+      return buscaRegistroNaPagina(chave, registro, ultimoItemDaPagina, arquivoDeRegistros, analise);
       fimDoArquivoIndexPrincipal = true;
     }
     for (int i = 0; i < qtdItensLidos; i++) {
@@ -95,8 +98,7 @@ bool pesquisaSequencial(int chave, Registro* registro, FILE* arquivoDeRegistros,
 
       analise->comparacaoPesquisa++;
       if (chaveAtual == chave) {
-        return buscaRegistroNaPagina(chave, registro, itensDoArquivoIndex[i],
-                                     arquivoDeRegistros, analise);
+        return buscaRegistroNaPagina(chave, registro, itensDoArquivoIndex[i], arquivoDeRegistros, analise);
       }
       analise->comparacaoPesquisa++;
       if (chaveAtual > chave) {
@@ -105,12 +107,12 @@ bool pesquisaSequencial(int chave, Registro* registro, FILE* arquivoDeRegistros,
           return buscaRegistroNaPagina(chave, registro, ultimoItemDaPagina,
                                        arquivoDeRegistros, analise);
         }
-        return buscaRegistroNaPagina(chave, registro,
-                                     itensDoArquivoIndex[i - 1],
-                                     arquivoDeRegistros, analise);
+        return buscaRegistroNaPagina(chave, registro, itensDoArquivoIndex[i - 1], arquivoDeRegistros, analise);
       }
     }
     ultimoItemDaPagina = itensDoArquivoIndex[qtdItensLidos - 1];
+    qtdItensLidos = fread(itensDoArquivoIndex, sizeof(ItemIndice), QTD_ITENS_A_SER_LIDOS, arquivoDeIndex);
+    analise->transferenciaPesquisa++;
   }
   return false;
 }
