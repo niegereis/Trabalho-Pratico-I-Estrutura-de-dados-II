@@ -14,13 +14,13 @@ Arvore Arvore_Inicia() {
   return pRaiz;
 }
 
-bool leArquivoBin(FILE* arq, int quantidade, Arvore arvore, Analise* analise) {
+bool leArquivoBin(FILE* arq, int quantidade, Arvore* arvore, Analise* analise) {
   int i = 0;
   Registro x;
   while ((fread(&x, sizeof(Registro), 1, arq) == 1) && i < quantidade) {
     analise->transferenciaInsercao++;
     i++;
-    ArvoreInsere(&arvore, x, analise);
+    ArvoreInsere(arvore, x, analise);
   }
   return true;
 }
@@ -44,8 +44,7 @@ bool ArvorePesquisa(No* pRaiz, int c, Registro* pX, Analise* analise) {
 }
 
 bool ArvoreInsere(No** ppRaiz, Registro x, Analise* analise) {
-  No** ppAux;
-  ppAux = ppRaiz;
+  No** ppAux = ppRaiz;
 
   while (*ppAux != NULL) {
     if (x.chave < (*ppAux)->item.chave) {
@@ -93,7 +92,7 @@ Registro arvoreBinaria(Analise* analise, int chave, short* achou, FILE* arquivo,
   Arvore arvore = Arvore_Inicia();
   clock_gettime(CLOCK_MONOTONIC, &inicio);
 
-  valido = leArquivoBin(arquivo, quantidade, arvore, analise);
+  valido = leArquivoBin(arquivo, quantidade, &arvore, analise);
   clock_gettime(CLOCK_MONOTONIC, &fim);
   analise->tempoInsere = fim.tv_nsec - inicio.tv_nsec;
 

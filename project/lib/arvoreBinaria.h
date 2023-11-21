@@ -4,12 +4,12 @@
 #include "compartilhado.h"
 
 typedef struct no {
-    Registro item;
-    struct no* pEsq;
-    struct no* pDir;
+  Registro item;
+  struct no* pEsq;
+  struct no* pDir;
 } No;
 
-typedef No* Arvore ;
+typedef No* Arvore;
 
 Arvore Arvore_Inicia();
 
@@ -23,9 +23,8 @@ bool ArvoreInsere(No**, Registro, Analise*);
 
 // void Central(No*);
 
-bool leArquivoBin(FILE*, int, Arvore, Analise*); 
+bool leArquivoBin(FILE*, int, Arvore*, Analise*);
 
 Registro arvoreBinaria(Analise*, int, short*, FILE*, int);
-
 
 #endif

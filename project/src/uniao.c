@@ -23,7 +23,8 @@ void imprimeAnalise(Analise an) {
       an.comparacaoPesquisa, an.transferenciaPesquisa, an.tempoPesquisa);
 }
 
-void pesquisaMetodo(int metodo, int situacao, int chave, int quantidade) {
+void pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
+                    bool exibirRegistros) {
   Analise analise;
   analiseInicia(&analise);
   Registro encontrado;
@@ -47,6 +48,13 @@ void pesquisaMetodo(int metodo, int situacao, int chave, int quantidade) {
     default:
       printf("Invalido\n");
       return;
+  }
+  if (exibirRegistros) {
+    printf("=============================================\n");
+    printf("  Registros inseridos no arquivo\n");
+    imprimirArquivoBinario(arquivo, quantidade);
+    printf("=============================================\n\n");
+    fseek(arquivo, 0, 0);
   }
 
   if (arquivo == NULL) {
@@ -73,10 +81,6 @@ void pesquisaMetodo(int metodo, int situacao, int chave, int quantidade) {
       encontrado = arvoreBEstrela(&analise, chave, &achou, arquivo, quantidade);
       break;
 
-    case 5:
-      imprimirArquivoBinario(arquivo, quantidade);
-      return;
-
     default:
       printf("Invalido\n");
       break;
@@ -99,6 +103,6 @@ void imprimirArquivoBinario(FILE* file, int quantidade) {
     char tmp[20];
     strncpy(tmp, r.dado2, 19);
 
-    printf("%d %ld %s\n", r.chave, r.dado1, tmp);
+    printf("    %d %0ld %s\n", r.chave, r.dado1, tmp);
   }
 }

@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "*.html.erb": "html",
+    "*.hbs": "html",
+    "arvorebinaria.h": "c"
+  }
+}

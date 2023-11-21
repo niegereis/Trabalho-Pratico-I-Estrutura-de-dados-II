@@ -9,6 +9,6 @@
 #include "arvoreBinaria.h"
 #include "compartilhado.h"
 
-void pesquisaMetodo(int, int, int, int);
+void pesquisaMetodo(int, int, int, int, bool exibirRegistros);
 void imprimirArquivoBinario(FILE*, int);
 #endif
