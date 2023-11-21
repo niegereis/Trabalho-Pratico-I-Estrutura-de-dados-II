@@ -63,7 +63,9 @@ bool buscaRegistroNaPagina(int chave, Registro* registro, ItemIndice indice,
   int j = 0;
   analise->transferenciaPesquisa++;
   while ((qtdItem = fread(registros, sizeof(Registro), QTD_ITENS_A_SER_LIDOS,
-                          arquivoDeRegitros)) > 0) {
+                          arquivoDeRegitros)) > 0 &&
+         j < QTD_ITENS_A_SER_LIDOS) {
+    j++;
     analise->comparacaoPesquisa++;
 
     for (int i = 0; i < qtdItem; i++) {
