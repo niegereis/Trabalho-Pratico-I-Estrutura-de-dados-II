@@ -64,16 +64,19 @@ bool noCheio(NoU* no) {
                                : no->U.Externo.qtdRegistros >= 2 * M;
 }
 
-bool encontraRegistros(Registro* registros, int qtdRegistros, Registro r, Analise* analise) {
+bool encontraRegistros(Registro* registros, int qtdRegistros, Registro r,
+                       Analise* analise) {
   for (int i = 0; i < qtdRegistros; i++) {
-    analise->comparacaoInsercao ++;
+    analise->comparacaoInsercao++;
     if (registros[i].chave == r.chave) return true;
   }
   return false;
 }
 
-bool arvoreInsereNaFolha(NoU* pNo, Registro registro, NoU** noExternoMaiores, Analise* analise) {
-  if (encontraRegistros(pNo->U.Externo.registros, pNo->U.Externo.qtdRegistros, registro, analise)) {
+bool arvoreInsereNaFolha(NoU* pNo, Registro registro, NoU** noExternoMaiores,
+                         Analise* analise) {
+  if (encontraRegistros(pNo->U.Externo.registros, pNo->U.Externo.qtdRegistros,
+                        registro, analise)) {
     return false;
   }
 
@@ -113,7 +116,8 @@ int* obterChaves(NoU* no) { return no->U.Interno.chaves; }
 
 NoU** obterApontadores(NoU* no) { return no->U.Interno.apontadores; }
 
-bool arvoreInsereRecursiva(NoU** no, Registro registro, NoU** noMaiores, int* chaveS, Analise* analise) {
+bool arvoreInsereRecursiva(NoU** no, Registro registro, NoU** noMaiores,
+                           int* chaveS, Analise* analise) {
   if ((*no)->tipoNo == Externo) {
     return arvoreInsereNaFolha(*no, registro, noMaiores, analise);
   }
@@ -125,7 +129,8 @@ bool arvoreInsereRecursiva(NoU** no, Registro registro, NoU** noMaiores, int* ch
     }
   }
   analise->comparacaoInsercao += i;
-  arvoreInsereRecursiva(&(*no)->U.Interno.apontadores[i], registro, noMaiores, chaveS, analise);
+  arvoreInsereRecursiva(&(*no)->U.Interno.apontadores[i], registro, noMaiores,
+                        chaveS, analise);
 
   if ((*noMaiores) != NULL) {
     bool temEspaco = (*no)->U.Interno.qtdChaves < 2 * M;
@@ -213,7 +218,8 @@ bool arvoreInsereRecursiva(NoU** no, Registro registro, NoU** noMaiores, int* ch
   return true;
 }
 
-bool arvoreInsere(ArvoreBEstrela* arvore, Registro registro, Analise* analise) {  // incompleto
+bool arvoreInsere(ArvoreBEstrela* arvore, Registro registro,
+                  Analise* analise) {  // incompleto
   if (*arvore == NULL) {
     *arvore = criaNo(Externo);
     (*arvore)->U.Externo.registros[0] = registro;
@@ -243,6 +249,7 @@ bool arvoreInsere(ArvoreBEstrela* arvore, Registro registro, Analise* analise) {
       (*arvore) = no;
     }
   }
+  return true;
 }
 
 void arvoreImprime(ArvoreBEstrela arvore) {
@@ -258,62 +265,74 @@ void arvoreImprime(ArvoreBEstrela arvore) {
   }
 }
 
-
-bool pesquisaNoExterno(ArvoreBEstrela pNo, int chave, Analise* analise, Registro* retorno){
+bool pesquisaNoExterno(ArvoreBEstrela pNo, int chave, Analise* analise,
+                       Registro* retorno) {
   int i = 0;
-  while(i < pNo->U.Externo.qtdRegistros && chave < pNo->U.Externo.registros[i].chave)i++;
+  int chaveAtual = pNo->U.Externo.registros[i].chave;
+  while (i < pNo->U.Externo.qtdRegistros && chave > chaveAtual) {
+    chaveAtual = pNo->U.Externo.registros[i].chave;
+    i++;
+  }
   analise->comparacaoPesquisa += i;
 
-  if(chave == pNo->U.Externo.registros[i].chave){
-    retorno = &pNo->U.Externo.registros[i];
+  if (chave == chaveAtual) {
+    (*retorno) = pNo->U.Externo.registros[i];
     return true;
   }
   return false;
 }
 
-bool pesquisaNoInterno(ArvoreBEstrela pNo, int chave, Analise* analise, Registro* retorno){
-  if(pNo == NULL) return false;
+bool pesquisaNoInterno(ArvoreBEstrela pNo, int chave, Analise* analise,
+                       Registro* retorno) {
+  if (pNo == NULL)
+    return false;
 
-  else if(pNo->tipoNo == Externo) return pesquisaNoExterno;
+  else if (pNo->tipoNo == Externo)
+    return pesquisaNoExterno(pNo, chave, analise, retorno);
 
   int i = 0;
-  while(i < pNo->U.Interno.qtdChaves && chave >= pNo->U.Interno.chaves[i])i++;
+  while (i < pNo->U.Interno.qtdChaves && chave >= pNo->U.Interno.chaves[i]) i++;
   analise->comparacaoPesquisa += i;
 
-  if(chave >= pNo->U.Interno.chaves[i]) return pesquisaNoInterno(pNo->U.Interno.apontadores[pNo->U.Interno.qtdChaves], chave, analise, retorno);
+  if (chave >= pNo->U.Interno.chaves[i])
+    return pesquisaNoInterno(
+        pNo->U.Interno.apontadores[pNo->U.Interno.qtdChaves], chave, analise,
+        retorno);
 
-  return pesquisaNoInterno(pNo->U.Interno.apontadores[i], chave, analise, retorno);
-  
+  return pesquisaNoInterno(pNo->U.Interno.apontadores[i], chave, analise,
+                           retorno);
 }
 
+Registro arvoreBEstrela(Analise* analise, int chave, short* achou,
+                        FILE* arquivo, int quantidade) {
+  Registro registroEncontrado;
+  bool valido;
+  struct timespec inicio, fim;
 
-Registro arvoreBEstrela(Analise* analise, int chave, short* achou, FILE* arquivo, int quantidade){
-    Registro registroEncontrado;
-    bool valido;
-    struct timespec inicio, fim;
+  NoU* no = criaNo(Externo);
 
-    NoU* no = criaNo(Externo);
+  clock_gettime(CLOCK_MONOTONIC, &inicio);
+  int i = 0;
+  while ((fread(&registroEncontrado, sizeof(Registro), 1, arquivo) == 1) &&
+         i < quantidade) {
+    i++;
+    arvoreInsere(&no, registroEncontrado, analise);
+  }
+  analise->transferenciaInsercao = i;
+  clock_gettime(CLOCK_MONOTONIC, &fim);
+  analise->tempoInsere = fim.tv_nsec - inicio.tv_nsec;
 
-    clock_gettime(CLOCK_MONOTONIC, &inicio);
-    int i = 0;
-    while((fread(&registroEncontrado, sizeof(Registro), 1, arquivo) == 1) && i<quantidade) { 
-            i++;
-            arvoreInsere(no, registroEncontrado, analise);
-    }
-    analise->transferenciaInsercao = i;
-    clock_gettime(CLOCK_MONOTONIC, &fim);
-    analise->tempoInsere = fim.tv_nsec - inicio.tv_nsec;
-
-    registroEncontrado.chave = chave;
-    clock_gettime(CLOCK_MONOTONIC, &inicio);
+  registroEncontrado.chave = chave;
+  clock_gettime(CLOCK_MONOTONIC, &inicio);
+  if (no->tipoNo == Interno)
     valido = pesquisaNoInterno(no, chave, analise, &registroEncontrado);
-    clock_gettime(CLOCK_MONOTONIC, &fim);
-    analise->tempoPesquisa = fim.tv_nsec - inicio.tv_nsec;
+  else if (no->tipoNo == Externo)
+    valido = pesquisaNoExterno(no, chave, analise, &registroEncontrado);
+  clock_gettime(CLOCK_MONOTONIC, &fim);
+  analise->tempoPesquisa = fim.tv_nsec - inicio.tv_nsec;
 
-    if(!valido) return registroEncontrado; 
+  if (!valido) return registroEncontrado;
 
-
-    *achou = 1;
-    return registroEncontrado;
-
+  *achou = 1;
+  return registroEncontrado;
 }

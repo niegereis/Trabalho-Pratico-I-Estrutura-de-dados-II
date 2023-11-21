@@ -12,7 +12,7 @@ CFLAGS	:= -Wall -Wextra -g
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
 #   their path using -Lpath, something like:
-LFLAGS =
+# LFLAGS =
 
 # define output directory
 OUTPUT	:= output
@@ -21,7 +21,7 @@ OUTPUT	:= output
 SRC		:= src
 
 # define include directory
-INCLUDE	:= include
+# INCLUDE	:= include
 
 # define lib directory
 LIB		:= lib

@@ -13,11 +13,10 @@ typedef struct registro {
   char dado2[5000];
 } Registro;
 
-
 typedef struct analise {
-    int comparacaoInsercao, comparacaoPesquisa;
-    int transferenciaInsercao, transferenciaPesquisa;
-    long int tempoPesquisa, tempoInsere;
+  int comparacaoInsercao, comparacaoPesquisa;
+  int transferenciaInsercao, transferenciaPesquisa;
+  long int tempoPesquisa, tempoInsere;
 } Analise;
 
 #endif

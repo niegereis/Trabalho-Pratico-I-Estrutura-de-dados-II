@@ -11,9 +11,9 @@ typedef struct itemIndice {
   int chave;
 } ItemIndice;
 
-bool criarPaginaIndicePrincipal();
-
-Registro acessoSequencialIndexado(Analise* analise, int chave, short* achou, FILE* arquivo, int quantidade);
-
+bool criarPaginaIndicePrincipal(FILE* arquivo, Analise* analise,
+                                int quantidade);
+Registro acessoSequencialIndexado(Analise* analise, int chave, short* achou,
+                                  FILE* arquivo, int quantidade);
 
 #endif  // !ACCESSO_SEQUENCIAL_INDEXADO_H
