@@ -1,9 +1,0 @@
-{
-  "files.associations": {
-    "*.html.erb": "html",
-    "*.hbs": "html",
-    "acessosequencialindexado.h": "c",
-    "compartilhado.h": "c",
-    "sysinfo.h": "c"
-  }
-}

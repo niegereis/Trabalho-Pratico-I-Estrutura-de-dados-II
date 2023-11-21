@@ -60,8 +60,11 @@ bool buscaRegistroNaPagina(int chave, Registro* registro, ItemIndice indice,
 
   Registro registros[QTD_ITENS_A_SER_LIDOS];
   int qtdItem;
+  int j = 0;
   while ((qtdItem = fread(registros, sizeof(Registro), QTD_ITENS_A_SER_LIDOS,
-                          arquivoDeRegitros)) > 0) {
+                          arquivoDeRegitros)) > 0 &&
+         j < QTD_ITENS_A_SER_LIDOS) {
+    j++;
     for (int i = 0; i < qtdItem; i++) {
       if (chave == registros[i].chave) {
         *registro = registros[i];
