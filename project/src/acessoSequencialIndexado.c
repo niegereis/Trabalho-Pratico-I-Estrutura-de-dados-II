@@ -24,7 +24,7 @@ bool criarPaginaIndicePrincipal(FILE* arquivo, Analise* analise,
             item.chave);
 
     fseek(arquivo, (ITENS_PAGINA - 1) * sizeof(Registro), SEEK_CUR);
-    i += 3;
+    i += ITENS_PAGINA;
   }
 
   // imprimeItemsArquivoBin(arquivoPaginaIndexPrincipal);
@@ -64,7 +64,7 @@ bool buscaRegistroNaPagina(int chave, Registro* registro, ItemIndice indice,
   analise->transferenciaPesquisa++;
   while ((qtdItem = fread(registros, sizeof(Registro), QTD_ITENS_A_SER_LIDOS,
                           arquivoDeRegitros)) > 0 &&
-         j < QTD_ITENS_A_SER_LIDOS) {
+         j * QTD_ITENS_A_SER_LIDOS < ITENS_PAGINA) {
     j++;
     analise->comparacaoPesquisa++;
 
