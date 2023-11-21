@@ -1,30 +1,35 @@
 #ifndef ARVOREBINARIA_H
 #define ARVOREBINARIA_H
 
-#include "compartilhado.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-typedef struct no {
-  Registro item;
-  struct no* pEsq;
-  struct no* pDir;
-} No;
+#include "./compartilhado.h"
 
-typedef No* Arvore;
+#define sizeOfDado2 5000
 
-Arvore Arvore_Inicia();
+typedef struct {
+  Registro registro;
+  long pEsq;
+  long pDir;
+} NoExt;
 
-bool ArvorePesquisa(No*, int, Registro*, Analise*);
+typedef NoExt* Arvore;
 
-bool ArvoreInsere(No**, Registro, Analise*);
+/*void Arvore_Inicia(No**);
 
-// void PreOrdem (No *p);
+bool ArvorePesquisa(No*, Chave, Item*);
 
-// void PosOrdem (No *p);
+bool ArvoreInsere(No**, Item);
 
-// void Central(No*);
+void PreOrdem (No *p);
 
-bool leArquivoBin(FILE*, int, Arvore*, Analise*);
+void PosOrdem (No *p);
 
+void Central(No*);*/
+
+bool ArvoreBinariaPesquisa(FILE*, long, Registro*, Analise*);
+void ArvoreBinariaCria(FILE*, FILE*, int, Analise*);
 Registro arvoreBinaria(Analise*, int, short*, FILE*, int);
 
 #endif

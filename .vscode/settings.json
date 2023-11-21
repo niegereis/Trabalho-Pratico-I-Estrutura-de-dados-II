@@ -2,6 +2,7 @@
   "files.associations": {
     "*.html.erb": "html",
     "*.hbs": "html",
-    "arvorebinaria.h": "c"
+    "arvorebinaria.h": "c",
+    "uniao.h": "c"
   }
 }

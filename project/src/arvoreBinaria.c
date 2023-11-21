@@ -1,110 +1,124 @@
-#include "../lib/arvoreBinaria.h"
+#include "arvoreBinaria.h"
 
-No* NoCria(Registro x) {
-  No* pAux = (No*)malloc(sizeof(No));
-  pAux->item = x;
-  pAux->pEsq = NULL;
-  pAux->pDir = NULL;
-  return pAux;
-}
+bool ArvoreBinariaPesquisa(FILE* arvoreBinaria, long chave, Registro* r,
+                           Analise* analise) {
+  fseek(arvoreBinaria, 0, 0);
 
-Arvore Arvore_Inicia() {
-  Arvore pRaiz;
-  pRaiz = NULL;
-  return pRaiz;
-}
-
-bool leArquivoBin(FILE* arq, int quantidade, Arvore* arvore, Analise* analise) {
   int i = 0;
-  Registro x;
-  while ((fread(&x, sizeof(Registro), 1, arq) == 1) && i < quantidade) {
-    analise->transferenciaInsercao++;
-    i++;
-    ArvoreInsere(arvore, x, analise);
-  }
-  return true;
-}
+  NoExt no;
+  while (fread(&no, sizeof(NoExt), 1, arvoreBinaria) == 1) {
+    analise->comparacaoPesquisa;
+    if (chave != no.registro.chave) {
+      analise->comparacaoPesquisa;
+      if ((chave > no.registro.chave)) {
+        fseek(arvoreBinaria, (sizeof(NoExt) * (no.pDir - 1)), 0);
+        i = no.pDir;
+        (*r) = no.registro;
+      }
 
-bool ArvorePesquisa(No* pRaiz, int c, Registro* pX, Analise* analise) {
-  No* pAux;
-  pAux = pRaiz;
-
-  while (pAux != NULL) {
-    if (c == pAux->item.chave) {
-      analise->comparacaoPesquisa++;
-      *pX = pAux->item;
-      return true;
-    } else if (c > pAux->item.chave) {
-      pAux = pAux->pDir;
-      analise->comparacaoPesquisa++;
-    } else
-      pAux = pAux->pEsq;
-  }
-  return false;
-}
-
-bool ArvoreInsere(No** ppRaiz, Registro x, Analise* analise) {
-  No** ppAux = ppRaiz;
-
-  while (*ppAux != NULL) {
-    if (x.chave < (*ppAux)->item.chave) {
-      analise->comparacaoInsercao++;
-      ppAux = &((*ppAux)->pEsq);
-    } else if (x.chave > (*ppAux)->item.chave) {
-      analise->comparacaoInsercao++;
-      ppAux = &((*ppAux)->pDir);
-    } else
+      analise->comparacaoPesquisa;
+      if ((chave < no.registro.chave)) {
+        fseek(arvoreBinaria, (sizeof(NoExt) * (no.pEsq - 1)), 0);
+        i = no.pEsq;
+        (*r) = no.registro;
+      }
+    } else {
+      if (i == 0) {
+        (*r) = no.registro;
+        return true;
+      }
       return false;
+    }
   }
-  *ppAux = NoCria(x);
-  return true;
+
+  printf("O valor não se encontra no arquivo.\n");
+  return 0;
 }
 
-// void PreOrdem (No *p) {
-//     if (p == NULL)
-//         return;
-//     printf("%ld\n", p->item.chave);
-//     PreOrdem(p->pEsq);
-//     PreOrdem(p->pDir);
-// }
+void ArvoreBinariaCria(FILE* arq, FILE* arvoreBinaria, int quantidade,
+                       Analise* analise) {
+  long j = 1;
+  NoExt noComRegistro;
+  NoExt noQuePercorre;
+  Registro registro;
+  int escreveu = 0;
+  long i = 0;
 
-// void PosOrdem (No *p) {
-//     if (p == NULL)
-//         return ;
-//     PosOrdem(p->pEsq);
-//     PosOrdem(p->pDir);
-//     printf("%ld\n", p->item.chave) ;
-// }
+  while ((fread(&registro, sizeof(Registro), 1, arq) == 1) && i < quantidade) {
+    noComRegistro.registro = registro;
+    noComRegistro.pDir = -1;
+    noComRegistro.pEsq = -1;
 
-// void Central(No *p) {
-//     if (p == NULL)
-//         return;
-//     Central(p->pEsq);
-//     printf("%ld\n", p->item.chave);
-//     Central(p->pDir);'''
-// }
+    fseek(arvoreBinaria, 0, SEEK_SET);
+
+    escreveu = 0;
+
+    while (escreveu == 0) {
+      if (fread(&noQuePercorre, sizeof(NoExt), 1, arvoreBinaria) == 1) {
+        if (noComRegistro.registro.chave < noQuePercorre.registro.chave) {
+          if (noQuePercorre.pEsq == -1) {
+            noQuePercorre.pEsq = j;
+            j++;
+            fseek(arvoreBinaria, (sizeof(NoExt) * -1), 1);
+            fwrite(&noQuePercorre, sizeof(NoExt), 1, arvoreBinaria);
+
+            fseek(arvoreBinaria, 0, SEEK_END);
+            fwrite(&noComRegistro, sizeof(NoExt), 1, arvoreBinaria);
+
+            escreveu = 1;
+          } else {
+            fseek(arvoreBinaria, 0, SEEK_SET);
+            fseek(arvoreBinaria, (sizeof(NoExt) * (noQuePercorre.pEsq - 1)), 0);
+          }
+        }
+
+        if (noComRegistro.registro.chave > noQuePercorre.registro.chave) {
+          if (noQuePercorre.pDir == -1) {
+            noQuePercorre.pDir = j;
+            j++;
+            fseek(arvoreBinaria, (sizeof(NoExt) * -1), 1);
+            fwrite(&noQuePercorre, sizeof(NoExt), 1, arvoreBinaria);
+
+            fseek(arvoreBinaria, 0, SEEK_END);
+            fwrite(&noComRegistro, sizeof(NoExt), 1, arvoreBinaria);
+
+            escreveu = 1;
+
+          } else {
+            fseek(arvoreBinaria, 0, SEEK_SET);
+            fseek(arvoreBinaria, (sizeof(NoExt) * (noQuePercorre.pDir - 1)), 0);
+          }
+        }
+      } else {
+        fwrite(&noComRegistro, sizeof(NoExt), 1, arvoreBinaria);
+        j++;
+        escreveu = 1;
+      }
+    }
+    i++;
+  }
+}
 
 Registro arvoreBinaria(Analise* analise, int chave, short* achou, FILE* arquivo,
                        int quantidade) {
-  Registro registroEncontrado;
-  bool valido;
-  struct timespec inicio, fim;
-  Arvore arvore = Arvore_Inicia();
-  clock_gettime(CLOCK_MONOTONIC, &inicio);
+  Registro registro;
 
-  valido = leArquivoBin(arquivo, quantidade, &arvore, analise);
+  struct timespec inicio, fim;
+  FILE* arvoreBinaria = fopen("./arquivos/arvoreBinaria.bin", "wb");
+  if (arvoreBinaria == NULL) {
+    printf("Erro ao abrir os arquivos.\n");
+    return;
+  }
+
+  clock_gettime(CLOCK_MONOTONIC, &inicio);
+  ArvoreBinariaCria(arquivo, arvoreBinaria, quantidade, analise);
   clock_gettime(CLOCK_MONOTONIC, &fim);
   analise->tempoInsere = fim.tv_nsec - inicio.tv_nsec;
 
-  if (!valido) return registroEncontrado;
-
   clock_gettime(CLOCK_MONOTONIC, &inicio);
-  valido = ArvorePesquisa(arvore, chave, &registroEncontrado, analise);
+  *achou = ArvoreBinariaPesquisa(arvoreBinaria, chave, &registro, analise);
   clock_gettime(CLOCK_MONOTONIC, &fim);
   analise->tempoPesquisa = fim.tv_nsec - inicio.tv_nsec;
 
-  if (!valido) return registroEncontrado;
-
-  *achou = 1;
-  return registroEncontrado;
+  return registro;
 }

@@ -1,9 +1,9 @@
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include<time.h>
-#define TAM 200
+#include <time.h>
 
+#define TAM 200
 
 typedef struct registro {
   int chave;
@@ -22,7 +22,7 @@ int main() {
     vetor[i] = i;
   }
 
-  //Embaralha o vetor
+  // Embaralha o vetor
   for (int i = TAM - 1; i >= 0; i--) {
     int posicaoAleatoria = rand() % (i + 1);
 
@@ -48,5 +48,3 @@ int main() {
   fclose(arquivo);
   return 0;
 }
-
-

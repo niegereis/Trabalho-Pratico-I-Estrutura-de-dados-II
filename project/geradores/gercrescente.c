@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define TAM 2000000
+#define TAM 10
 
 typedef struct registro {
   int chave;

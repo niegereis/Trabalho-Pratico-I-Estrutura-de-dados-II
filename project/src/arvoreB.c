@@ -1,6 +1,6 @@
 #include "../lib/arvoreB.h"
 
-void InicializaArvoreB(TipoApontador *Arvore) { *Arvore = NULL; }
+void InicializaArvoreB(TipoApontador *arvore) { (*arvore) = NULL; }
 
 // void arvoreB(Analise *analise, FILE *arquivo, Registro *reg, int situacao,
 // int quantidade, TipoApontador Arvore){
@@ -59,26 +59,11 @@ bool Pesquisa(Registro *x, TipoApontador Ap, Analise *analise) {
 
   analise->comparacaoPesquisa++;
   if (x->chave < Ap->r[i - 1].chave) {
-    return Pesquisa(x, Ap->p[i - 1], analise);  // chamada recursiva
+    Pesquisa(x, Ap->p[i - 1], analise);  // chamada recursiva
   } else {
-    return Pesquisa(x, Ap->p[i], analise);
+    Pesquisa(x, Ap->p[i], analise);
   }
 }
-
-/*void Imprime(TipoApontador arvore){
-    int i = 0;
-
-    if (arvore == NULL) {
-        return;
-    }
-
-    while (i <= arvore->n) {
-        Imprime(arvore->p[i]);
-        if (i != arvore->n)
-           printf("%ld ", arvore->r[i].Chave);
-        i++;
-    }
-}*/
 
 // Inserir o registro dentro da página apontada por Ap
 // TipoRegistro Reg = Registro que vc vai inserir
@@ -226,7 +211,7 @@ Registro arvoreB(Analise *analise, int chave, short *achou, FILE *arquivo,
   struct timespec inicio, fim;
 
   TipoApontador arvore;
-  InicializaArvoreB(&arvore);
+  InicializaArvoreB(arvore);
 
   clock_gettime(CLOCK_MONOTONIC, &inicio);
   int i = 0;

@@ -7,8 +7,6 @@ bool criarPaginaIndicePrincipal(FILE* arquivo, Analise* analise,
                                 int quantidade) {
   FILE* arquivoPaginaIndexPrincipal =
       fopen("./arquivos/crescenteIndex.bin", "w+b");
-  FILE* arquivoPaginaIndexPrincipalTxt =
-      fopen("./arquivos/crescenteIndex.txt", "w+");
   if (arquivoPaginaIndexPrincipal == NULL) return false;
 
   Registro registro;
@@ -19,9 +17,6 @@ bool criarPaginaIndicePrincipal(FILE* arquivo, Analise* analise,
     analise->transferenciaInsercao++;
     ItemIndice item = criarItemIndicePeloRegistro(registro, posicaoItemAtual++);
     fwrite(&item, sizeof(ItemIndice), 1, arquivoPaginaIndexPrincipal);
-
-    fprintf(arquivoPaginaIndexPrincipalTxt, "%d %d\n", item.posicao,
-            item.chave);
 
     fseek(arquivo, (ITENS_PAGINA - 1) * sizeof(Registro), SEEK_CUR);
     i += ITENS_PAGINA;
