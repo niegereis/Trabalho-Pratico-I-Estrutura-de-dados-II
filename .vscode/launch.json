@@ -11,7 +11,12 @@
       "preLaunchTask": "Compile",
       "program": "${workspaceFolder}/project/output/main",
       // <metodo> <quantidade> <situacao> <chave>
-      "args": ["3", "20", "1", "20"],
+      "args": [
+        "2",
+        "3",
+        "1",
+        "2"
+      ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}/project",
       "environment": [],
