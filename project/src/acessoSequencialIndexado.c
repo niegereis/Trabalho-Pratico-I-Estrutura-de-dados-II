@@ -55,16 +55,17 @@ void imprimeItemsArquivoBin(FILE* file) {
 
 // NAO VERIFICA SE A CHAVE DE ENTRADA E MENOR QUE A CHAVE DO PRIMEIRO REGISTRO
 bool buscaRegistroNaPagina(int chave, Registro* registro, ItemIndice indice,
-                           FILE* arquivoDeRegitros) {
+                           FILE* arquivoDeRegitros, Analise* analise) {
   fseek(arquivoDeRegitros, sizeof(Registro) * indice.posicao, SEEK_SET);
 
   Registro registros[QTD_ITENS_A_SER_LIDOS];
   int qtdItem;
   int j = 0;
+  analise->transferenciaPesquisa++;
   while ((qtdItem = fread(registros, sizeof(Registro), QTD_ITENS_A_SER_LIDOS,
-                          arquivoDeRegitros)) > 0 &&
-         j < QTD_ITENS_A_SER_LIDOS) {
-    j++;
+                          arquivoDeRegitros)) > 0) {
+    analise->comparacaoPesquisa++;
+
     for (int i = 0; i < qtdItem; i++) {
       if (chave == registros[i].chave) {
         *registro = registros[i];
@@ -87,10 +88,10 @@ bool pesquisaSequencial(int chave, Registro* registro, FILE* arquivoDeRegistros,
     ItemIndice itensDoArquivoIndex[QTD_ITENS_A_SER_LIDOS];
     int qtdItensLidos = fread(itensDoArquivoIndex, sizeof(ItemIndice),
                               QTD_ITENS_A_SER_LIDOS, arquivoDeIndex);
-    analise->transferenciaPesquisa = qtdItensLidos;
+    analise->transferenciaPesquisa++;
     if (qtdItensLidos == 0) {
       return buscaRegistroNaPagina(chave, registro, ultimoItemDaPagina,
-                                   arquivoDeRegistros);
+                                   arquivoDeRegistros, analise);
       fimDoArquivoIndexPrincipal = true;
     }
     for (int i = 0; i < qtdItensLidos; i++) {
@@ -99,17 +100,18 @@ bool pesquisaSequencial(int chave, Registro* registro, FILE* arquivoDeRegistros,
       analise->comparacaoPesquisa++;
       if (chaveAtual == chave) {
         return buscaRegistroNaPagina(chave, registro, itensDoArquivoIndex[i],
-                                     arquivoDeRegistros);
+                                     arquivoDeRegistros, analise);
       }
       analise->comparacaoPesquisa++;
       if (chaveAtual > chave) {
         bool ehPrimeiroItemDaPagina = (i == 0);
         if (ehPrimeiroItemDaPagina) {
           return buscaRegistroNaPagina(chave, registro, ultimoItemDaPagina,
-                                       arquivoDeRegistros);
+                                       arquivoDeRegistros, analise);
         }
-        return buscaRegistroNaPagina(
-            chave, registro, itensDoArquivoIndex[i - 1], arquivoDeRegistros);
+        return buscaRegistroNaPagina(chave, registro,
+                                     itensDoArquivoIndex[i - 1],
+                                     arquivoDeRegistros, analise);
       }
     }
     ultimoItemDaPagina = itensDoArquivoIndex[qtdItensLidos - 1];
