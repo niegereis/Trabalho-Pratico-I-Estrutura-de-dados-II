@@ -16,7 +16,12 @@ int main() {
   int vetor[TAM];
   srand(42);
   Registro registro;
+
   FILE* arquivo = fopen("../arquivos/aleatorio.bin", "wb");
+  if (!arquivo) {
+    printf("Erro ao abrir arquivo binário!");
+    exit(1);
+  }
 
   for (int i = 0; i < TAM; i++) {
     vetor[i] = i;

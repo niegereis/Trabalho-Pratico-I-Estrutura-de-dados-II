@@ -14,6 +14,10 @@ int main(int argc, char** argv) {
   srand(time(NULL));
   Registro registro;
   FILE* arquivo = fopen("../arquivos/crescente.bin", "wb");
+  if (!arquivo) {
+    printf("Erro ao abrir arquivo binário!");
+    exit(1);
+  }
 
   if (argc != 2) {
     printf("execute ./exe <qtd-items>");

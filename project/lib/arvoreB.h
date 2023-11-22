@@ -24,8 +24,6 @@ void Ins(Registro, TipoApontador, short*, Registro*, TipoApontador*, Analise*);
 
 void Insere(Registro, TipoApontador*, Analise*);
 
-// void arvoreB(Analise*, FILE*, Registro *, int , int, TipoApontador);
-
 void InicializaArvoreB(TipoApontador*);
 
 void LiberaPagina(TipoApontador);

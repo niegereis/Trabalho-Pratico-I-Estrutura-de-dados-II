@@ -2,37 +2,6 @@
 
 void InicializaArvoreB(TipoApontador *arvore) { (*arvore) = NULL; }
 
-// void arvoreB(Analise *analise, FILE *arquivo, Registro *reg, int situacao,
-// int quantidade, TipoApontador Arvore){
-//     clock_t inicioInsere, fimInsere;
-//     clock_t inicioPesquisa, fimPesquisa;
-
-//     //TipoApontador *Arvore;
-//     InicializaArvoreB(Arvore);
-//     analise->comparacaoInsercao = 0;
-//     analise->comparacaoPesquisa = 0;
-//     analise->numeroTransferencia = 0;
-
-//     int i =0;
-
-//     inicioInsere = clock();
-//     while((fread(&reg, sizeof(Registro), 1, arquivo) == 1) && i<quantidade) {
-//             i++;
-//             Insere(*reg, &Arvore, analise);
-//     }
-//     fimInsere = clock();
-//     analise->comparacaoInsercao = ((double)(fimInsere - inicioInsere)) /
-//     CLOCKS_PER_SEC;
-
-//     inicioPesquisa = clock();
-//     Pesquisa(reg, Arvore, analise);
-//     fimPesquisa = clock();
-//     analise->comparacaoPesquisa = ((double)(fimPesquisa - inicioPesquisa)) /
-//     CLOCKS_PER_SEC;
-
-//     LiberaArvore(&Arvore);
-// }
-
 // Função para pesquisar um item na árvore
 bool Pesquisa(Registro *x, TipoApontador Ap, Analise *analise) {
   long i = 1;

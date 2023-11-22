@@ -26,7 +26,6 @@ typedef struct noU {
 
 ArvoreBEstrela arvoreCria();
 bool arvoreInsere(ArvoreBEstrela*, Registro, Analise*);
-bool arvorePesquisa(ArvoreBEstrela, int, Registro*);
 NoU* criaNo(TipoDoNo tipo);
 void insereRegistroOrdenado(NoU*, Registro, Registro*);
 void arvoreImprime(ArvoreBEstrela);

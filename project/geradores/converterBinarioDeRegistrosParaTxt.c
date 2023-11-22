@@ -2,22 +2,57 @@
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
-#include "../lib/arvoreBinaria.h"
+#include "../lib/compartilhado.h"
 
-#define TAM 200
+char* formatNewName(char filename[], char suffix[], char ext[]);
 
-void main() {
-  FILE* arquivoBin = fopen("../arquivos/arvoreBinaria.bin", "rb");
-  FILE* arquivoTxt = fopen("../arquivos/arvoreBinaria.txt", "w");
+int converterBinarioDeRegistrosParaTxt() {
+  char filename[50];
+  int qtd;
 
-  NoExt noAtual;
-  while (fread(&noAtual, sizeof(NoExt), 1, arquivoBin) > 0) {
-    fprintf(arquivoTxt, "Dir: %ld - Reg: %d - Esq: %ld\n", noAtual.pEsq,
-            noAtual.registro.chave, noAtual.pDir);
+  printf("Digite o nome do arquivo: ");
+  scanf("%s", filename);
+  printf("Digite a quantidade de linhas a copiar (-1 se for pra ignorar): ");
+  scanf("%d", &qtd);
+  qtd = -1 ? INT_MAX : qtd;
+
+  char* binaryNameCopy = formatNewName(filename, "", "bin");
+  char* txtNameCopy = formatNewName(filename, "", "txt");
+
+  FILE* fileBinary = fopen(binaryNameCopy, "rb");
+  if (!fileBinary) {
+    printf("Erro ao abrir arquivo binario!");
+    exit(1);
+  }
+  FILE* fileTxt = fopen(txtNameCopy, "w");
+  if (!fileTxt) {
+    printf("Erro ao abrir arquivo texto!");
+    exit(1);
   }
 
-  fclose(arquivoBin);
-  fclose(arquivoTxt);
+  Registro r;
+  int i = 0;
+  while (i < qtd && fread(&r, sizeof(Registro), 1, fileBinary) == 1) {
+    i++;
+
+    char* tmp = (char*)malloc(sizeof(char) * 20);
+    strncpy(tmp, r.dado2, 20);
+    fprintf(fileTxt, "%d %ld %s\n", r.chave, r.dado1, tmp);
+  }
+
+  fclose(fileBinary);
+  fclose(fileTxt);
+}
+
+char* formatNewName(char filename[], char suffix[], char ext[]) {
+  char* newName = (char*)malloc(sizeof(char) * 120);
+  strcat(newName, "../arquivos/");
+  strcat(newName, filename);
+  strcat(newName, suffix);
+  strcat(newName, ".");
+  strcat(newName, ext);
+  return newName;
 }
