@@ -5,6 +5,8 @@ void analiseInicia(Analise* analise) {
   analise->comparacaoPesquisa = 0;
   analise->transferenciaInsercao = 0;
   analise->transferenciaPesquisa = 0;
+  analise->tempoInsere = 0;
+  analise->tempoPesquisa = 0;
 }
 
 void imprimeRegistro(Registro reg) {
