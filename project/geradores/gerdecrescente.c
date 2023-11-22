@@ -1,18 +1,8 @@
-#include <limits.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
-#define TAM 200
 
-typedef struct registro {
-  int chave;
-  long dado1;
-  char dado2[5000];
+#include "gerdecrescente.h"
 
-} Registro;
-
-int main() {
+int gerdecrescente(int tam) {
   srand(time(NULL));
   Registro registro;
   FILE* arquivo = fopen("../arquivos/decrescente.bin", "wb");
@@ -21,7 +11,7 @@ int main() {
     exit(1);
   }
 
-  for (int i = TAM - 1; i >= 0; i--) {
+  for (int i = tam - 1; i >= 0; i--) {
     registro.chave = i;
     registro.dado1 = rand() % LONG_MAX;
     for (int j = 0; j < 4999; j++) {

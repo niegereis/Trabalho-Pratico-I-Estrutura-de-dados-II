@@ -5,8 +5,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#define __USE_POSIX199309
 #include <time.h>
 
 typedef struct registro {

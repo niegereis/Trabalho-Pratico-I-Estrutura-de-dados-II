@@ -1,12 +1,6 @@
 
-#include <limits.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
-#include "../lib/arvoreBinaria.h"
-
-#define TAM 200
+#include "converterArquivoArvoreBinariaParaTxt.h"
 
 void converterArquivoArvoreBinariaParaTxt() {
   FILE* arquivoBin = fopen("../arquivos/arvoreBinaria.bin", "rb");

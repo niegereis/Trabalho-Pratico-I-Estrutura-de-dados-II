@@ -1,16 +1,7 @@
-#include <limits.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
-typedef struct registro {
-  int chave;
-  long dado1;
-  char dado2[5000];
+#include "gercrescente.h"
 
-} Registro;
-
-int main(int argc, char** argv) {
+int gercrescente(int tam) {
   srand(time(NULL));
   Registro registro;
   FILE* arquivo = fopen("../arquivos/crescente.bin", "wb");
@@ -18,13 +9,6 @@ int main(int argc, char** argv) {
     printf("Erro ao abrir arquivo binário!");
     exit(1);
   }
-
-  if (argc != 2) {
-    printf("execute ./exe <qtd-items>");
-    exit(1);
-  }
-
-  int tam = atoi(argv[1]);
 
   for (int i = 0; i < tam; i++) {
     registro.chave = i;

@@ -1,24 +1,10 @@
-#include <limits.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
-typedef struct registro {
-  int chave;
-  long dado1;
-  char dado2[5000];
+#include "geraleatorio.h"
 
-} Registro;
-
-int geraleatorio() {
-  printf("Tamanho: ");
-  int tam;
-  scanf("%d", &tam);
-
+int geraleatorio(int tam) {
   int vetor[tam];
   srand(42);
   Registro registro;
-
   FILE* arquivo = fopen("../arquivos/aleatorio.bin", "wb");
   if (!arquivo) {
     printf("Erro ao abrir arquivo binário!");

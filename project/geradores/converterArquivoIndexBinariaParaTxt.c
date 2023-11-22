@@ -1,10 +1,5 @@
 
-#include <limits.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
-#include "../lib/acessoSequencialIndexado.h"
+#include "converterArquivoIndexBinariaParaTxt.h"
 
 void converterArquivoIndexParaBinario() {
   FILE* arquivoBin = fopen("../arquivos/crescenteIndex.bin", "rb");

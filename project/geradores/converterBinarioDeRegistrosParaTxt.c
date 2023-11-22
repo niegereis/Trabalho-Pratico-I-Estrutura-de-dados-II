@@ -17,11 +17,12 @@ int converterBinarioDeRegistrosParaTxt() {
   scanf("%s", filename);
   printf("Digite a quantidade de linhas a copiar (-1 se for pra ignorar): ");
   scanf("%d", &qtd);
-  qtd = -1 ? INT_MAX : qtd;
+  qtd = qtd <= -1 ? INT_MAX : qtd;
 
   char* binaryNameCopy = formatNewName(filename, "", "bin");
   char* txtNameCopy = formatNewName(filename, "", "txt");
-
+  printf("|%s|\n", binaryNameCopy);
+  printf("|%s|\n", txtNameCopy);
   FILE* fileBinary = fopen(binaryNameCopy, "rb");
   if (!fileBinary) {
     printf("Erro ao abrir arquivo binario!");
@@ -45,10 +46,13 @@ int converterBinarioDeRegistrosParaTxt() {
 
   fclose(fileBinary);
   fclose(fileTxt);
+
+  return 0;
 }
 
 char* formatNewName(char filename[], char suffix[], char ext[]) {
   char* newName = (char*)malloc(sizeof(char) * 120);
+  newName[0] = '\0';
   strcat(newName, "../arquivos/");
   strcat(newName, filename);
   strcat(newName, suffix);

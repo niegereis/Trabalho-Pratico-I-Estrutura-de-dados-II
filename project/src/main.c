@@ -21,9 +21,13 @@ int main(int argc, char** argv) {
     printf("\t3 - arvore b\n");
     printf("\t3 - arvore b*\n");
     printf("<quantidade>\n");
-    printf("\tvalor inteiro (8)\n");
-    printf("<>\n");
-    printf("\tvalor inteiro (8)\n");
+    printf("\tvalor inteiro\n");
+    printf("<situacao>\n");
+    printf("\t1 - crescente\n");
+    printf("\t2 - decrescente\n");
+    printf("\t3 - desordenado\n");
+    printf("<chave-buscada>\n");
+    printf("\tvalor inteiro\n");
     exit(1);
   }
 
