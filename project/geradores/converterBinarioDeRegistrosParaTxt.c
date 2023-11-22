@@ -1,11 +1,4 @@
-
-#include <limits.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-
-#include "../lib/compartilhado.h"
+#include "converterBinarioDeRegistrosParaTxt.h"
 
 char* formatNewName(char filename[], char suffix[], char ext[]);
 
