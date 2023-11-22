@@ -120,5 +120,7 @@ Registro arvoreBinaria(Analise* analise, int chave, short* achou, FILE* arquivo,
   clock_gettime(CLOCK_MONOTONIC, &fim);
   analise->tempoPesquisa = fim.tv_nsec - inicio.tv_nsec;
 
+  fclose(arvoreBinaria);
+
   return registro;
 }
