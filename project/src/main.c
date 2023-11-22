@@ -13,7 +13,17 @@ int main(int argc, char** argv) {
   bool exibirRegistros = false;
 
   if (argc != 4 && argc != 5 && argc != 6) {
-    printf("Argumentos inválidos");
+    printf("Argumentos inválidos\n");
+    printf("./output/main <metodo> <quantidade> <situacao> <chave-buscada>");
+    printf("<metodo>\n");
+    printf("\t1 - busca sequencial binaria\n");
+    printf("\t2 - arvore binaria\n");
+    printf("\t3 - arvore b\n");
+    printf("\t3 - arvore b*\n");
+    printf("<quantidade>\n");
+    printf("\tvalor inteiro (8)\n");
+    printf("<>\n");
+    printf("\tvalor inteiro (8)\n");
     exit(1);
   }
 

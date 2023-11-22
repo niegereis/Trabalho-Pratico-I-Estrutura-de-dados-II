@@ -180,7 +180,7 @@ Registro arvoreB(Analise *analise, int chave, short *achou, FILE *arquivo,
   struct timespec inicio, fim;
 
   TipoApontador arvore;
-  InicializaArvoreB(arvore);
+  InicializaArvoreB(&arvore);
 
   clock_gettime(CLOCK_MONOTONIC, &inicio);
   int i = 0;

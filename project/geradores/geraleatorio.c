@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define TAM 200
-
 typedef struct registro {
   int chave;
   long dado1;
@@ -12,8 +10,12 @@ typedef struct registro {
 
 } Registro;
 
-int main() {
-  int vetor[TAM];
+int geraleatorio() {
+  printf("Tamanho: ");
+  int tam;
+  scanf("%d", &tam);
+
+  int vetor[tam];
   srand(42);
   Registro registro;
 
@@ -23,12 +25,12 @@ int main() {
     exit(1);
   }
 
-  for (int i = 0; i < TAM; i++) {
+  for (int i = 0; i < tam; i++) {
     vetor[i] = i;
   }
 
   // Embaralha o vetor
-  for (int i = TAM - 1; i >= 0; i--) {
+  for (int i = tam - 1; i >= 0; i--) {
     int posicaoAleatoria = rand() % (i + 1);
 
     int temp = vetor[i];
@@ -36,7 +38,7 @@ int main() {
     vetor[posicaoAleatoria] = temp;
   }
 
-  for (int i = 0; i < TAM; i++) {
+  for (int i = 0; i < tam; i++) {
     registro.chave = vetor[i];
     registro.dado1 = rand() % LONG_MAX;
     for (int j = 0; j < 4999; j++) {
