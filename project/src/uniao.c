@@ -23,7 +23,7 @@ void imprimeAnalise(Analise an) {
       an.comparacaoPesquisa, an.transferenciaPesquisa, an.tempoPesquisa);
 }
 
-void pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
+bool pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
                     bool exibirRegistros, Analise* analise,
                     bool imprimirRelatorio) {
   analiseInicia(analise);
@@ -63,7 +63,7 @@ void pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
 
   if (arquivo == NULL) {
     perror("Não foi possível abrir o arquivo.\n");
-    return;
+    return false;
   }
 
   switch (metodo) {
@@ -99,6 +99,10 @@ void pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
     } else
       printf("nope\n");
   }
+  if (achou)
+    return true;
+  else
+    return false;
 }
 
 void imprimirArquivoBinario(FILE* file, int quantidade) {

@@ -50,22 +50,42 @@ int main(int argc, char** argv) {
                    &preProcesso, true);
   } else {
     Analise global;
-    const int qtd = 20;
-    int chavesBuscadas[qtd];
-    for (int i = 0; i < qtd; i++) {
-      Analise preProcesso;
-      chave = rand() % quantidade;
-      chavesBuscadas[i] = chave;
-      pesquisaMetodo(metodo, situacao, chave, quantidade, false, &preProcesso,
-                     false);
+    const int qtdChaves = 20;
+    int chavesBuscadas[qtdChaves];
 
-      incrementAnalise(&global, preProcesso);
+    const int intervaloSuperior = 150;
+    const int intervaloInferior = 50;
+
+    if (intervaloInferior > intervaloSuperior) {
+      printf(
+          "\nERROR: Intervalo superior precisa ser maior que o intervalo "
+          "inferior na geração de chaves aleatórias\n");
+      exit(1);
     }
-    dividePor(&global, qtd);
+
+    int chavesEncontradas = 0;
+    for (int i = 0; i < qtdChaves; i++) {
+      Analise preProcesso;
+      if (intervaloSuperior - intervaloInferior == 0)
+        chave = intervaloSuperior;
+      else
+        chave = (rand() % (intervaloSuperior + 1 - intervaloInferior)) +
+                intervaloInferior;
+      chavesBuscadas[i] = chave;
+      bool encontrou = pesquisaMetodo(metodo, situacao, chave, quantidade,
+                                      false, &preProcesso, false);
+      chavesEncontradas += encontrou ? 1 : 0;
+      if (encontrou) incrementAnalise(&global, preProcesso);
+    }
+    dividePor(&global, chavesEncontradas);
     printf("\nChaves buscadas:\n");
-    for (int i = 0; i < qtd; i++) {
+    for (int i = 0; i < qtdChaves; i++) {
       printf("%d ", chavesBuscadas[i]);
     }
+    printf(
+        "\n\nForam encontradas %d chaves (geradas no intervalo de %d a %d) de "
+        "%d buscadas\n",
+        chavesEncontradas, intervaloInferior, intervaloSuperior, qtdChaves);
     imprimeAnalise(global);
   }
 
