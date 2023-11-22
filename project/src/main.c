@@ -53,8 +53,8 @@ int main(int argc, char** argv) {
     const int qtdChaves = 20;
     int chavesBuscadas[qtdChaves];
 
-    const int intervaloSuperior = 150;
-    const int intervaloInferior = 50;
+    const int intervaloSuperior = 100;
+    const int intervaloInferior = 0;
 
     if (intervaloInferior > intervaloSuperior) {
       printf(

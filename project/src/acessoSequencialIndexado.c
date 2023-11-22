@@ -50,19 +50,22 @@ void imprimeItemsArquivoBin(FILE* file) {
 
 // NAO VERIFICA SE A CHAVE DE ENTRADA E MENOR QUE A CHAVE DO PRIMEIRO REGISTRO
 bool buscaRegistroNaPagina(int chave, Registro* registro, ItemIndice indice,
-                           FILE* arquivoDeRegitros, Analise* analise) {
+                           FILE* arquivoDeRegitros, Analise* analise, int quantidade) {
   fseek(arquivoDeRegitros, sizeof(Registro) * indice.posicao, SEEK_SET);
 
   Registro registros[QTD_ITENS_A_SER_LIDOS];
   int qtdItem;
   int j = 0;
+  int itensLidos = 0;
   analise->transferenciaPesquisa++;
   while ((qtdItem = fread(registros, sizeof(Registro), QTD_ITENS_A_SER_LIDOS,
                           arquivoDeRegitros)) > 0 &&
          j * QTD_ITENS_A_SER_LIDOS < ITENS_PAGINA) {
     j++;
-
-    for (int i = 0; i < qtdItem; i++) {
+    
+    for (int i = 0; i < qtdItem && itensLidos < quantidade; i++) {
+      analise->comparacaoPesquisa++;
+        itensLidos++;
       if (chave == registros[i].chave) {
         *registro = registros[i];
         return true;
@@ -73,7 +76,7 @@ bool buscaRegistroNaPagina(int chave, Registro* registro, ItemIndice indice,
 }
 
 bool pesquisaSequencial(int chave, Registro* registro, FILE* arquivoDeRegistros,
-                        Analise* analise) {
+                        Analise* analise, int quantidade) {
   FILE* arquivoDeIndex = fopen("./arquivos/crescenteIndex.bin", "r+b");
   if (arquivoDeIndex == NULL) return false;
 
@@ -90,7 +93,7 @@ bool pesquisaSequencial(int chave, Registro* registro, FILE* arquivoDeRegistros,
   while (!fimDoArquivoIndexPrincipal) {
                       
     if (qtdItensLidos == 0) {
-      return buscaRegistroNaPagina(chave, registro, ultimoItemDaPagina, arquivoDeRegistros, analise);
+      return buscaRegistroNaPagina(chave, registro, ultimoItemDaPagina, arquivoDeRegistros, analise, quantidade);
       fimDoArquivoIndexPrincipal = true;
     }
     for (int i = 0; i < qtdItensLidos; i++) {
@@ -98,16 +101,16 @@ bool pesquisaSequencial(int chave, Registro* registro, FILE* arquivoDeRegistros,
 
       analise->comparacaoPesquisa++;
       if (chaveAtual == chave) {
-        return buscaRegistroNaPagina(chave, registro, itensDoArquivoIndex[i], arquivoDeRegistros, analise);
+        return buscaRegistroNaPagina(chave, registro, itensDoArquivoIndex[i], arquivoDeRegistros, analise, quantidade);
       }
       analise->comparacaoPesquisa++;
       if (chaveAtual > chave) {
         bool ehPrimeiroItemDaPagina = (i == 0);
         if (ehPrimeiroItemDaPagina) {
           return buscaRegistroNaPagina(chave, registro, ultimoItemDaPagina,
-                                       arquivoDeRegistros, analise);
+                                       arquivoDeRegistros, analise, quantidade);
         }
-        return buscaRegistroNaPagina(chave, registro, itensDoArquivoIndex[i - 1], arquivoDeRegistros, analise);
+        return buscaRegistroNaPagina(chave, registro, itensDoArquivoIndex[i - 1], arquivoDeRegistros, analise, quantidade);
       }
     }
     ultimoItemDaPagina = itensDoArquivoIndex[qtdItensLidos - 1];
@@ -130,7 +133,7 @@ Registro acessoSequencialIndexado(Analise* analise, int chave, short* achou,
   analise->tempoInsere = fim.tv_nsec - inicio.tv_nsec;
 
   clock_gettime(CLOCK_MONOTONIC, &inicio);
-  valido = pesquisaSequencial(chave, &registroEncontrado, arquivo, analise);
+  valido = pesquisaSequencial(chave, &registroEncontrado, arquivo, analise, quantidade);
   clock_gettime(CLOCK_MONOTONIC, &fim);
   analise->tempoPesquisa = fim.tv_nsec - inicio.tv_nsec;
   if (!valido) return registroEncontrado;

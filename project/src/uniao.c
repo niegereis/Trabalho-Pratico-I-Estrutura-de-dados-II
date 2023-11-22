@@ -70,7 +70,6 @@ bool pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
     case 1:  // sequencial
       encontrado =
           acessoSequencialIndexado(analise, chave, &achou, arquivo, quantidade);
-      printf("   %d   ", achou);
       break;
 
     case 2:  // arvore binaria
