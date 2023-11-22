@@ -17,11 +17,11 @@ void imprimeRegistro(Registro reg) {
 void imprimeAnalise(Analise an) {
   printf(
       "\nInserção:\n\tComparações: %d\n\tTransferências: %d\n\tTempo(em "
-      "nanosegundos): %lld",
+      "nanossegundos): %lld",
       an.comparacaoInsercao, an.transferenciaInsercao, an.tempoInsere);
   printf(
       "\nPesquisa:\n\tComparações: %d\n\tTransferências: %d\n\tTempo(em "
-      "nanosegundos): %lld\n",
+      "nanossegundos): %lld\n",
       an.comparacaoPesquisa, an.transferenciaPesquisa, an.tempoPesquisa);
 }
 

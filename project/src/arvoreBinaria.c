@@ -130,12 +130,12 @@ Registro arvoreBinaria(Analise* analise, int chave, short* achou, FILE* arquivo,
   clock_gettime(CLOCK_MONOTONIC, &inicio);
   ArvoreBinariaCria(arquivo, arvoreBinaria, quantidade, analise);
   clock_gettime(CLOCK_MONOTONIC, &fim);
-  analise->tempoInsere = fim.tv_nsec - inicio.tv_nsec;
+  analise->tempoInsere = (fim.tv_sec - inicio.tv_sec) * 1e9 + (fim.tv_nsec - inicio.tv_nsec);
 
   clock_gettime(CLOCK_MONOTONIC, &inicio);
   *achou = ArvoreBinariaPesquisa(arvoreBinaria, chave, &registro, analise);
   clock_gettime(CLOCK_MONOTONIC, &fim);
-  analise->tempoPesquisa = fim.tv_nsec - inicio.tv_nsec;
+  analise->tempoPesquisa = (fim.tv_sec - inicio.tv_sec) * 1e9 + (fim.tv_nsec - inicio.tv_nsec);
 
   fclose(arvoreBinaria);
 

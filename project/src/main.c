@@ -51,6 +51,7 @@ int main(int argc, char** argv) {
   } else {
     Analise global;
     analiseInicia(&global);
+
     const int qtdChaves = 20;
     int chavesBuscadas[qtdChaves];
 
@@ -67,6 +68,7 @@ int main(int argc, char** argv) {
     int chavesEncontradas = 0;
     for (int i = 0; i < qtdChaves; i++) {
       Analise preProcesso;
+      analiseInicia(&preProcesso);
       if (intervaloSuperior - intervaloInferior == 0)
         chave = intervaloSuperior;
       else
@@ -103,10 +105,10 @@ void incrementAnalise(Analise* global, Analise a1) {
 }
 
 void dividePor(Analise* global, int qtd) {
-  global->comparacaoInsercao /= (float)qtd;
-  global->comparacaoPesquisa /= (float)qtd;
-  global->tempoInsere /= (float)qtd;
-  global->tempoPesquisa /= (float)qtd;
-  global->transferenciaInsercao /= (float)qtd;
-  global->transferenciaPesquisa /= (float)qtd;
+  global->comparacaoInsercao /= qtd;
+  global->comparacaoPesquisa /= qtd;
+  global->tempoInsere /= qtd;
+  global->tempoPesquisa /= qtd;
+  global->transferenciaInsercao /= qtd;
+  global->transferenciaPesquisa /= qtd;
 }

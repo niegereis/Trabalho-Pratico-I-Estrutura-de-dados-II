@@ -182,21 +182,21 @@ Registro arvoreB(Analise *analise, int chave, short *achou, FILE *arquivo,
   TipoApontador arvore;
   InicializaArvoreB(&arvore);
 
-  clock_gettime(CLOCK_MONOTONIC, &inicio);
+  clock_gettime(CLOCK_REALTIME, &inicio);
   int i = 0;
   while ((fread(&registroEncontrado, sizeof(Registro), 1, arquivo) == 1) &&
          i < quantidade) {
     i++;
     Insere(registroEncontrado, &arvore, analise);
   }
-  clock_gettime(CLOCK_MONOTONIC, &fim);
-  analise->tempoInsere = fim.tv_nsec - inicio.tv_nsec;
+  clock_gettime(CLOCK_REALTIME, &fim);
+  analise->tempoInsere = (fim.tv_sec - inicio.tv_sec) * 1e9 + (fim.tv_nsec - inicio.tv_nsec);
 
   registroEncontrado.chave = chave;
   clock_gettime(CLOCK_MONOTONIC, &inicio);
   valido = Pesquisa(&registroEncontrado, arvore, analise);
   clock_gettime(CLOCK_MONOTONIC, &fim);
-  analise->tempoPesquisa = fim.tv_nsec - inicio.tv_nsec;
+  analise->tempoPesquisa = (fim.tv_sec - inicio.tv_sec) * 1e9 + (fim.tv_nsec - inicio.tv_nsec);
   if (!valido) return registroEncontrado;
 
   *achou = 1;

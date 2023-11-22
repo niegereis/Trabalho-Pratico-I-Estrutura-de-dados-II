@@ -320,7 +320,7 @@ Registro arvoreBEstrela(Analise* analise, int chave, short* achou,
   }
   analise->transferenciaInsercao = i;
   clock_gettime(CLOCK_MONOTONIC, &fim);
-  analise->tempoInsere = fim.tv_nsec - inicio.tv_nsec;
+  analise->tempoInsere = (fim.tv_sec - inicio.tv_sec) * 1e9 + (fim.tv_nsec - inicio.tv_nsec);
 
   registroEncontrado.chave = chave;
   clock_gettime(CLOCK_MONOTONIC, &inicio);
@@ -329,7 +329,7 @@ Registro arvoreBEstrela(Analise* analise, int chave, short* achou,
   else if (no->tipoNo == Externo)
     valido = pesquisaNoExterno(no, chave, analise, &registroEncontrado);
   clock_gettime(CLOCK_MONOTONIC, &fim);
-  analise->tempoPesquisa = fim.tv_nsec - inicio.tv_nsec;
+  analise->tempoPesquisa = (fim.tv_sec - inicio.tv_sec) * 1e9 + (fim.tv_nsec - inicio.tv_nsec);
 
   if (!valido) return registroEncontrado;
 

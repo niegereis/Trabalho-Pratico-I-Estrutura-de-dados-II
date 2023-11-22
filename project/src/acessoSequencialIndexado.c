@@ -131,12 +131,12 @@ Registro acessoSequencialIndexado(Analise* analise, int chave, short* achou,
 
   criarPaginaIndicePrincipal(arquivo, analise, quantidade);
   clock_gettime(CLOCK_MONOTONIC, &fim);
-  analise->tempoInsere = fim.tv_nsec - inicio.tv_nsec;
+  analise->tempoInsere = (fim.tv_sec - inicio.tv_sec) * 1e9 + (fim.tv_nsec - inicio.tv_nsec);
 
   clock_gettime(CLOCK_MONOTONIC, &inicio);
   valido = pesquisaSequencial(chave, &registroEncontrado, arquivo, analise, quantidade);
   clock_gettime(CLOCK_MONOTONIC, &fim);
-  analise->tempoPesquisa = fim.tv_nsec - inicio.tv_nsec;
+  analise->tempoPesquisa = (fim.tv_sec - inicio.tv_sec) * 1e9 + (fim.tv_nsec - inicio.tv_nsec);
   if (!valido) return registroEncontrado;
 
   *achou = 1;
