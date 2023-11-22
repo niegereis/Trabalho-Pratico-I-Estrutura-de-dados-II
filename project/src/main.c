@@ -50,10 +50,11 @@ int main(int argc, char** argv) {
                    &preProcesso, true);
   } else {
     Analise global;
+    analiseInicia(&global);
     const int qtdChaves = 20;
     int chavesBuscadas[qtdChaves];
 
-    const int intervaloSuperior = 100;
+    const int intervaloSuperior = quantidade;
     const int intervaloInferior = 0;
 
     if (intervaloInferior > intervaloSuperior) {

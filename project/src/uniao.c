@@ -5,6 +5,8 @@ void analiseInicia(Analise* analise) {
   analise->comparacaoPesquisa = 0;
   analise->transferenciaInsercao = 0;
   analise->transferenciaPesquisa = 0;
+  analise->tempoInsere = 0;
+  analise->tempoPesquisa = 0;
 }
 
 void imprimeRegistro(Registro reg) {
@@ -15,11 +17,11 @@ void imprimeRegistro(Registro reg) {
 void imprimeAnalise(Analise an) {
   printf(
       "\nInserção:\n\tComparações: %d\n\tTransferências: %d\n\tTempo(em "
-      "nanosegundos): %ld",
+      "nanosegundos): %lld",
       an.comparacaoInsercao, an.transferenciaInsercao, an.tempoInsere);
   printf(
       "\nPesquisa:\n\tComparações: %d\n\tTransferências: %d\n\tTempo(em "
-      "nanosegundos): %ld\n",
+      "nanosegundos): %lld\n",
       an.comparacaoPesquisa, an.transferenciaPesquisa, an.tempoPesquisa);
 }
 
@@ -86,7 +88,7 @@ bool pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
 
     default:
       printf("Invalido\n");
-      break;
+      return false;
   }
 
   fclose(arquivo);

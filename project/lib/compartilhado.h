@@ -16,7 +16,7 @@ typedef struct registro {
 typedef struct analise {
   int comparacaoInsercao, comparacaoPesquisa;
   int transferenciaInsercao, transferenciaPesquisa;
-  long int tempoPesquisa, tempoInsere;
+  long long int tempoPesquisa, tempoInsere;
 } Analise;
 
 #endif
