@@ -15,11 +15,11 @@ void imprimeRegistro(Registro reg) {
 void imprimeAnalise(Analise an) {
   printf(
       "\nInserção:\n\tComparações: %d\n\tTransferências: %d\n\tTempo(em "
-      "nanosegundos): %ld",
+      "nanosegundos): %lld",
       an.comparacaoInsercao, an.transferenciaInsercao, an.tempoInsere);
   printf(
       "\nPesquisa:\n\tComparações: %d\n\tTransferências: %d\n\tTempo(em "
-      "nanosegundos): %ld\n",
+      "nanosegundos): %lld\n",
       an.comparacaoPesquisa, an.transferenciaPesquisa, an.tempoPesquisa);
 }
 
@@ -47,7 +47,7 @@ bool pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
 
       default:
         printf("Invalido\n");
-        return;
+        return false;
     }
   } else {
     arquivo = fopen("./arquivos/crescente.bin", "r+b");
@@ -86,7 +86,7 @@ bool pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
 
     default:
       printf("Invalido\n");
-      break;
+      return false;
   }
 
   fclose(arquivo);
