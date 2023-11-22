@@ -42,8 +42,8 @@ int main(int argc, char** argv) {
       Analise preProcesso;
       chave = rand() % quantidade;
       chavesBuscadas[i] = chave;
-      pesquisaMetodo(metodo, situacao, chave, quantidade, exibirRegistros,
-                     &preProcesso, false);
+      pesquisaMetodo(metodo, situacao, chave, quantidade, false, &preProcesso,
+                     false);
 
       incrementAnalise(&global, preProcesso);
     }

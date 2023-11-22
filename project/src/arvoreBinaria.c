@@ -7,16 +7,18 @@ bool ArvoreBinariaPesquisa(FILE* arvoreBinaria, long chave, Registro* r,
   int i = 0;
   NoExt no;
   while (fread(&no, sizeof(NoExt), 1, arvoreBinaria) == 1) {
-    analise->comparacaoPesquisa;
+    analise->transferenciaPesquisa++;
+
+    analise->comparacaoPesquisa++;
     if (chave != no.registro.chave) {
-      analise->comparacaoPesquisa;
+      analise->comparacaoPesquisa++;
       if ((chave > no.registro.chave)) {
         fseek(arvoreBinaria, (sizeof(NoExt) * (no.pDir - 1)), 0);
         i = no.pDir;
         (*r) = no.registro;
       }
 
-      analise->comparacaoPesquisa;
+      analise->comparacaoPesquisa++;
       if ((chave < no.registro.chave)) {
         fseek(arvoreBinaria, (sizeof(NoExt) * (no.pEsq - 1)), 0);
         i = no.pEsq;
@@ -41,21 +43,31 @@ void ArvoreBinariaCria(FILE* arq, FILE* arvoreBinaria, int quantidade,
   NoExt noComRegistro;
   NoExt noQuePercorre;
   Registro registro;
-  int escreveu = 0;
+  int escreveu = false;
   long i = 0;
 
-  while ((fread(&registro, sizeof(Registro), 1, arq) == 1) && i < quantidade) {
+  while (i < quantidade && (fread(&registro, sizeof(Registro), 1, arq) == 1)) {
+    analise->transferenciaInsercao++;
     noComRegistro.registro = registro;
     noComRegistro.pDir = -1;
     noComRegistro.pEsq = -1;
+    escreveu = false;
 
     fseek(arvoreBinaria, 0, SEEK_SET);
 
-    escreveu = 0;
-
     while (escreveu == 0) {
-      if (fread(&noQuePercorre, sizeof(NoExt), 1, arvoreBinaria) == 1) {
+      int qtdLida;
+
+      analise->transferenciaInsercao++;
+      if ((qtdLida = fread(&noQuePercorre, sizeof(NoExt), 1, arvoreBinaria)) ==
+          1) {
+        analise->comparacaoInsercao++;
+        if (noQuePercorre.registro.chave == noComRegistro.registro.chave)
+          continue;
+
+        analise->comparacaoInsercao++;
         if (noComRegistro.registro.chave < noQuePercorre.registro.chave) {
+          analise->comparacaoInsercao++;
           if (noQuePercorre.pEsq == -1) {
             noQuePercorre.pEsq = j;
             j++;
@@ -65,14 +77,15 @@ void ArvoreBinariaCria(FILE* arq, FILE* arvoreBinaria, int quantidade,
             fseek(arvoreBinaria, 0, SEEK_END);
             fwrite(&noComRegistro, sizeof(NoExt), 1, arvoreBinaria);
 
-            escreveu = 1;
+            escreveu = true;
           } else {
             fseek(arvoreBinaria, 0, SEEK_SET);
             fseek(arvoreBinaria, (sizeof(NoExt) * (noQuePercorre.pEsq - 1)), 0);
           }
         }
-
+        analise->comparacaoInsercao++;
         if (noComRegistro.registro.chave > noQuePercorre.registro.chave) {
+          analise->comparacaoInsercao++;
           if (noQuePercorre.pDir == -1) {
             noQuePercorre.pDir = j;
             j++;
@@ -82,7 +95,7 @@ void ArvoreBinariaCria(FILE* arq, FILE* arvoreBinaria, int quantidade,
             fseek(arvoreBinaria, 0, SEEK_END);
             fwrite(&noComRegistro, sizeof(NoExt), 1, arvoreBinaria);
 
-            escreveu = 1;
+            escreveu = true;
 
           } else {
             fseek(arvoreBinaria, 0, SEEK_SET);
@@ -94,8 +107,8 @@ void ArvoreBinariaCria(FILE* arq, FILE* arvoreBinaria, int quantidade,
         j++;
         escreveu = 1;
       }
+      i++;
     }
-    i++;
   }
 }
 
@@ -104,7 +117,7 @@ Registro arvoreBinaria(Analise* analise, int chave, short* achou, FILE* arquivo,
   Registro registro;
 
   struct timespec inicio, fim;
-  FILE* arvoreBinaria = fopen("./arquivos/arvoreBinaria.bin", "wb");
+  FILE* arvoreBinaria = fopen("./arquivos/arvoreBinaria.bin", "w+b");
   if (arvoreBinaria == NULL) {
     printf("Erro ao abrir os arquivos.\n");
     return;

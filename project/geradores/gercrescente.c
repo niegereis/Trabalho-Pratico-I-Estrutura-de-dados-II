@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define TAM 10
-
 typedef struct registro {
   int chave;
   long dado1;
@@ -12,11 +10,19 @@ typedef struct registro {
 
 } Registro;
 
-int main() {
+int main(int argc, char** argv) {
   srand(time(NULL));
   Registro registro;
   FILE* arquivo = fopen("../arquivos/crescente.bin", "wb");
-  for (int i = 0; i < TAM; i++) {
+
+  if (argc != 2) {
+    printf("execute ./exe <qtd-items>");
+    exit(1);
+  }
+
+  int tam = atoi(argv[1]);
+
+  for (int i = 0; i < tam; i++) {
     registro.chave = i;
     registro.dado1 = rand() % LONG_MAX;
     for (int j = 0; j < 4999; j++) {
