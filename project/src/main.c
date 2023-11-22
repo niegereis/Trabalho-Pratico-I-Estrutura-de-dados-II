@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
   if (argc != 4 && argc != 5 && argc != 6) {
     printf("Argumentos inválidos\n");
     printf("./output/main <metodo> <quantidade> <situacao> <chave-buscada>");
-    printf("<metodo>\n");
+    printf("\n<metodo>\n");
     printf("\t1 - busca sequencial binaria\n");
     printf("\t2 - arvore binaria\n");
     printf("\t3 - arvore b\n");
@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
   metodo = atoi(argv[1]);
   quantidade = atoi(argv[2]);
   situacao = atoi(argv[3]);
-  if (argc == 5) chave = atoi(argv[4]);
+  if (argc >= 5) chave = atoi(argv[4]);
   if (argc == 6)
     exibirRegistros = strcmp(argv[5], "-P") == 0 || strcmp(argv[5], "-p") == 0;
 
@@ -44,7 +44,7 @@ int main(int argc, char** argv) {
     exit(1);
   }
 
-  if (argc == 5) {
+  if (argc >= 5) {
     Analise preProcesso;
     pesquisaMetodo(metodo, situacao, chave, quantidade, exibirRegistros,
                    &preProcesso, true);

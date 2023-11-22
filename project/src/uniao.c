@@ -31,24 +31,28 @@ void pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
   short achou = 0;
   FILE* arquivo;
 
-  switch (situacao) {
-    case 1:
-      arquivo = fopen("./arquivos/crescente.bin", "r+b");
+  if (metodo >= 2) {
+    switch (situacao) {
+      case 1:
+        arquivo = fopen("./arquivos/crescente.bin", "r+b");
+        break;
 
-      break;
+      case 2:
+        arquivo = fopen("./arquivos/decrescente.bin", "r+b");
+        break;
 
-    case 2:
-      arquivo = fopen("./arquivos/decrescente.bin", "r+b");
-      break;
+      case 3:
+        arquivo = fopen("./arquivos/aleatorio.bin", "r+b");
+        break;
 
-    case 3:
-      arquivo = fopen("./arquivos/aleatorio.bin", "r+b");
-      break;
-
-    default:
-      printf("Invalido\n");
-      return;
+      default:
+        printf("Invalido\n");
+        return;
+    }
+  } else {
+    arquivo = fopen("./arquivos/crescente.bin", "r+b");
   }
+
   if (exibirRegistros) {
     printf("=============================================\n");
     printf("  Registros inseridos no arquivo\n");

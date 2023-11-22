@@ -25,11 +25,8 @@ bool ArvoreBinariaPesquisa(FILE* arvoreBinaria, long chave, Registro* r,
         (*r) = no.registro;
       }
     } else {
-      if (i == 0) {
-        (*r) = no.registro;
-        return true;
-      }
-      return false;
+      (*r) = no.registro;
+      return true;
     }
   }
 
@@ -107,8 +104,8 @@ void ArvoreBinariaCria(FILE* arq, FILE* arvoreBinaria, int quantidade,
         j++;
         escreveu = 1;
       }
-      i++;
     }
+    i++;
   }
 }
 
@@ -120,7 +117,7 @@ Registro arvoreBinaria(Analise* analise, int chave, short* achou, FILE* arquivo,
   FILE* arvoreBinaria = fopen("./arquivos/arvoreBinaria.bin", "w+b");
   if (arvoreBinaria == NULL) {
     printf("Erro ao abrir os arquivos.\n");
-    return;
+    return registro;
   }
 
   clock_gettime(CLOCK_MONOTONIC, &inicio);

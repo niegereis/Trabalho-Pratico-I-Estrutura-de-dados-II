@@ -3,3 +3,4 @@
 *.o
 *.d
 /project/output/*
+/project/geradores/exe

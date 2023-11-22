@@ -24,7 +24,7 @@ void converterArquivoArvoreBinariaParaTxt() {
   int i;
   while (i < qtd && fread(&noAtual, sizeof(NoExt), 1, arquivoBin) > 0) {
     i++;
-    fprintf(arquivoTxt, "Dir: %ld - Reg: %d - Esq: %ld\n", noAtual.pEsq,
+    fprintf(arquivoTxt, "Esq: %ld - Reg: %d - Dir: %ld\n", noAtual.pEsq,
             noAtual.registro.chave, noAtual.pDir);
   }
 
