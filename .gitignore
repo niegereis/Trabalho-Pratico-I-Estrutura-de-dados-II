@@ -2,3 +2,4 @@
 /project/arquivos/*
 *.o
 *.d
+/project/output/*
