@@ -47,7 +47,7 @@ bool pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
 
       default:
         printf("Invalido\n");
-        return;
+        return false;
     }
   } else {
     arquivo = fopen("./arquivos/crescente.bin", "r+b");
