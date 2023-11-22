@@ -14,5 +14,6 @@ bool pesquisaMetodo(int, int, int, int, bool, Analise*, bool);
 void imprimirArquivoBinario(FILE*, int);
 void imprimeRegistro(Registro);
 void imprimeAnalise(Analise);
+void analiseInicia(Analise*);
 
 #endif
