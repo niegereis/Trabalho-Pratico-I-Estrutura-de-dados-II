@@ -80,7 +80,8 @@ int main(int argc, char** argv) {
       chavesEncontradas += encontrou ? 1 : 0;
       if (encontrou) incrementAnalise(&global, preProcesso);
     }
-    dividePor(&global, chavesEncontradas);
+    if(chavesEncontradas)
+      dividePor(&global, chavesEncontradas);
     printf("\nChaves buscadas:\n");
     for (int i = 0; i < qtdChaves; i++) {
       printf("%d ", chavesBuscadas[i]);
