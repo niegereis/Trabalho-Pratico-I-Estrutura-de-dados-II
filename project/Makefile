@@ -7,7 +7,8 @@
 CC = gcc
 
 # define any compile-time flags
-CFLAGS	:= -Wall -Wextra -g
+CFLAGS	:= -Wall -Wextra -g -std=gnu11
+CXXFLAGS = -I. -I./examples -O3 -DNDEBUG -std=c++11 -fPIC -D_POSIX_C_SOURCE=199309L -lrt 
 
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
