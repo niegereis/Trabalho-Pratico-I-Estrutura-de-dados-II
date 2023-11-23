@@ -87,15 +87,12 @@ bool pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
 
   if (imprimirRelatorio) {
     if (achou == 1) {
-      imprimeRegistro(encontrado);
       imprimeAnalise(*analise);
       if (exibirRegistros) {
-        printf("=============================================\n");
+        printf("\n=============================================\n");
         printf("Registro encontrado\n");
-        printf("%d %ld %s\n", encontrado.chave, encontrado.dado1,
-               encontrado.dado2);
-        printf("=============================================\n\n");
-        fseek(arquivo, 0, 0);
+        imprimeRegistro(encontrado);
+        printf("\n=============================================\n\n");
       }
 
     } else
