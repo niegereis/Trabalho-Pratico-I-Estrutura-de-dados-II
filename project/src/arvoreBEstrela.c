@@ -9,6 +9,10 @@ bool ehInterno(NoU* no) { return no->tipoNo == Interno; }
 // Cria um novo nó com o tipo especificado (interno ou externo)
 NoU* criaNo(TipoDoNo tipo) {
   NoU* no = (NoU*)malloc(sizeof(NoU));
+  if (!no) {
+    printf("Sem memória ram!");
+    exit(1);
+  }
   no->tipoNo = tipo;
 
   if (tipo == Interno)

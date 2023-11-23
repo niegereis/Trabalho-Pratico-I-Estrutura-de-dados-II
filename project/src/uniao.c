@@ -10,8 +10,10 @@ void analiseInicia(Analise* analise) {
 }
 
 void imprimeRegistro(Registro reg) {
-  printf("Registro:\n\tChave: %d\n\tDado 1: %ld\n\tDado 2: %s",
-         reg.chave, reg.dado1, reg.dado2);
+  char tmp[20];
+  strncpy(tmp, reg.dado2, 19);
+  printf("Registro:\n\tChave: %d\n\tDado 1: %ld\n\tDado 2: %s\n", reg.chave,
+         reg.dado1, tmp);
 }
 
 void imprimeAnalise(Analise an) {
@@ -60,6 +62,13 @@ bool pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
     return false;
   }
 
+  if (exibirRegistros) {
+    printf("=============== Arquivo ==================\n");
+    printf("==========================================\n");
+    imprimirArquivoBinario(arquivo, quantidade);
+    printf("==========================================\n");
+  }
+
   switch (metodo) {
     case 1:  // sequencial
       encontrado =
@@ -88,15 +97,10 @@ bool pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
   if (imprimirRelatorio) {
     if (achou == 1) {
       printf("\nRegistro encontrado!\n");
-      if (exibirRegistros) {
-        printf("\n=============================================\n");
-        imprimeRegistro(encontrado);
-        printf("\n=============================================\n\n");
-      }
+      imprimeRegistro(encontrado);
       imprimeAnalise(*analise);
 
-    } 
-    else{
+    } else {
       printf("\nO registro não foi encontrado!\n\n");
       imprimeAnalise(*analise);
     }
@@ -117,4 +121,5 @@ void imprimirArquivoBinario(FILE* file, int quantidade) {
 
     printf("    %d %0ld %s\n", r.chave, r.dado1, tmp);
   }
+  fseek(file, 0, 0);
 }
