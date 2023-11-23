@@ -35,10 +35,13 @@ int converterBinarioDeRegistrosParaTxt() {
     char* tmp = (char*)malloc(sizeof(char) * 20);
     strncpy(tmp, r.dado2, 20);
     fprintf(fileTxt, "%d %ld %s\n", r.chave, r.dado1, tmp);
+    free(tmp);
   }
 
   fclose(fileBinary);
   fclose(fileTxt);
+  free(binaryNameCopy);
+  free(txtNameCopy);
 
   return 0;
 }
