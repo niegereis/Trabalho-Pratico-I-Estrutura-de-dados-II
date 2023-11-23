@@ -17,11 +17,11 @@ void imprimeRegistro(Registro reg) {
 void imprimeAnalise(Analise an) {
   printf(
       "\nInserção:\n\tComparações: %d\n\tTransferências: %d\n\tTempo(em "
-      "nanossegundos): %lld",
+      "nano segundos): %lld",
       an.comparacaoInsercao, an.transferenciaInsercao, an.tempoInsere);
   printf(
       "\nPesquisa:\n\tComparações: %d\n\tTransferências: %d\n\tTempo(em "
-      "nanossegundos): %lld\n",
+      "nano segundos): %lld\n",
       an.comparacaoPesquisa, an.transferenciaPesquisa, an.tempoPesquisa);
 }
 
@@ -53,14 +53,6 @@ bool pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
     }
   } else {
     arquivo = fopen("./arquivos/crescente.bin", "r+b");
-  }
-
-  if (exibirRegistros) {
-    printf("=============================================\n");
-    printf("  Registros inseridos no arquivo\n");
-    imprimirArquivoBinario(arquivo, quantidade);
-    printf("=============================================\n\n");
-    fseek(arquivo, 0, 0);
   }
 
   if (arquivo == NULL) {
@@ -97,6 +89,15 @@ bool pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
     if (achou == 1) {
       imprimeRegistro(encontrado);
       imprimeAnalise(*analise);
+      if (exibirRegistros) {
+        printf("=============================================\n");
+        printf("Registro encontrado\n");
+        printf("%d %ld %s\n", encontrado.chave, encontrado.dado1,
+               encontrado.dado2);
+        printf("=============================================\n\n");
+        fseek(arquivo, 0, 0);
+      }
+
     } else
       printf("nope\n");
   }

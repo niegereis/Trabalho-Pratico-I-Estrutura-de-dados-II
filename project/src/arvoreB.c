@@ -28,9 +28,9 @@ bool Pesquisa(Registro *x, TipoApontador Ap, Analise *analise) {
 
   analise->comparacaoPesquisa++;
   if (x->chave < Ap->r[i - 1].chave) {
-    Pesquisa(x, Ap->p[i - 1], analise);  // chamada recursiva
+    return Pesquisa(x, Ap->p[i - 1], analise);  // chamada recursiva
   } else {
-    Pesquisa(x, Ap->p[i], analise);
+    return Pesquisa(x, Ap->p[i], analise);
   }
 }
 
@@ -72,8 +72,9 @@ void Ins(Registro Reg, TipoApontador Ap, short *Cresceu, Registro *RegRetorno,
          TipoApontador *ApRetorno, Analise *analise) {
   long i = 1;
   long j;
-  TipoApontador
-      ApTemp;  // Apontador para a página temporária (pagina nova ou não)
+
+  // Apontador para a página temporária (pagina nova ou não)
+  TipoApontador ApTemp;
 
   if (Ap == NULL) {
     *Cresceu = true;
@@ -90,9 +91,9 @@ void Ins(Registro Reg, TipoApontador Ap, short *Cresceu, Registro *RegRetorno,
   // Enquanto o a chave que queremos inserir for maior que a chave que está na
   // página, incrementa o i ate achar a posição onde o item tem q ser inserido
 
-  if (Reg.chave ==
-      Ap->r[i - 1].chave) {  // Se esse item ja tiver na árvore, não vai ser
-                             // colocado de novo, parando a recursão
+  // Se esse item ja tiver na árvore, não vai ser colocado de novo, parando a
+  // recursão
+  if (Reg.chave == Ap->r[i - 1].chave) {
     printf(" Erro: Registro ja esta presentei\n");
     analise->comparacaoInsercao++;
     *Cresceu = false;
@@ -190,13 +191,16 @@ Registro arvoreB(Analise *analise, int chave, short *achou, FILE *arquivo,
     Insere(registroEncontrado, &arvore, analise);
   }
   clock_gettime(CLOCK_REALTIME, &fim);
-  analise->tempoInsere = (fim.tv_sec - inicio.tv_sec) * 1e9 + (fim.tv_nsec - inicio.tv_nsec);
+  analise->tempoInsere =
+      (fim.tv_sec - inicio.tv_sec) * 1e9 + (fim.tv_nsec - inicio.tv_nsec);
 
   registroEncontrado.chave = chave;
   clock_gettime(CLOCK_MONOTONIC, &inicio);
   valido = Pesquisa(&registroEncontrado, arvore, analise);
   clock_gettime(CLOCK_MONOTONIC, &fim);
-  analise->tempoPesquisa = (fim.tv_sec - inicio.tv_sec) * 1e9 + (fim.tv_nsec - inicio.tv_nsec);
+  analise->tempoPesquisa =
+      (fim.tv_sec - inicio.tv_sec) * 1e9 + (fim.tv_nsec - inicio.tv_nsec);
+  LiberaArvore(&arvore);
   if (!valido) return registroEncontrado;
 
   *achou = 1;

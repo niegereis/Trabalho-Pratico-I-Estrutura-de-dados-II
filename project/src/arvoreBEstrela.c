@@ -1,11 +1,5 @@
 #include "../lib/arvoreBEstrela.h"
 
-// Função para criar uma nova árvore B*
-ArvoreBEstrela arvoreCria() {  // OK
-  ArvoreBEstrela arvore = NULL;
-  return arvore;
-}
-
 // Verifica se o nó é externo
 bool ehExterno(NoU* no) { return no->tipoNo == Externo; }
 
@@ -24,6 +18,19 @@ NoU* criaNo(TipoDoNo tipo) {
     no->U.Externo.qtdRegistros = 0;
 
   return no;
+}
+
+// libera memória alocada da arvore
+void liberaArvoreBS(NoU* no) {
+  if (no->tipoNo == Externo) {
+    free(no);
+    return;
+  }
+
+  for (int i = 0; i < no->U.Interno.qtdChaves + 1; i++) {
+    liberaArvoreBS(no->U.Interno.apontadores[i]);
+  }
+  free(no);
 }
 
 // Insere um registro ordenadamente no nó externo
@@ -375,6 +382,9 @@ bool pesquisaNoInterno(ArvoreBEstrela pNo, int chave, Analise* analise,
                            retorno);
 }
 
+// Inicializa a árvore
+void arvoreBSInicia(NoU** n) { *n = NULL; }
+
 // Função para buscar uma chave na árvore B*
 Registro arvoreBEstrela(Analise* analise, int chave, short* achou,
                         FILE* arquivo, int quantidade) {
@@ -384,7 +394,8 @@ Registro arvoreBEstrela(Analise* analise, int chave, short* achou,
   struct timespec inicio, fim;
 
   // Cria um nó externo para inserção
-  NoU* no = criaNo(Externo);
+  NoU* arvore;
+  arvoreBSInicia(&arvore);
 
   // Inicia o processo de inserção na árvore B*
   clock_gettime(CLOCK_MONOTONIC, &inicio);
@@ -392,7 +403,7 @@ Registro arvoreBEstrela(Analise* analise, int chave, short* achou,
   while ((fread(&registroEncontrado, sizeof(Registro), 1, arquivo) == 1) &&
          i < quantidade) {
     i++;
-    arvoreInsere(&no, registroEncontrado, analise);
+    arvoreInsere(&arvore, registroEncontrado, analise);
   }
   analise->transferenciaInsercao = i;
   clock_gettime(CLOCK_MONOTONIC, &fim);
@@ -403,14 +414,15 @@ Registro arvoreBEstrela(Analise* analise, int chave, short* achou,
   registroEncontrado.chave = chave;
   // Inicia o processo de pesquisa na árvore B*
   clock_gettime(CLOCK_MONOTONIC, &inicio);
-  if (no->tipoNo == Interno)
-    valido = pesquisaNoInterno(no, chave, analise, &registroEncontrado);
-  else if (no->tipoNo == Externo)
-    valido = pesquisaNoExterno(no, chave, analise, &registroEncontrado);
+  if (arvore->tipoNo == Interno)
+    valido = pesquisaNoInterno(arvore, chave, analise, &registroEncontrado);
+  else if (arvore->tipoNo == Externo)
+    valido = pesquisaNoExterno(arvore, chave, analise, &registroEncontrado);
   clock_gettime(CLOCK_MONOTONIC, &fim);
   analise->tempoPesquisa =
       (fim.tv_sec - inicio.tv_sec) * 1e9 + (fim.tv_nsec - inicio.tv_nsec);
 
+  liberaArvoreBS(arvore);
   // Se a chave não for válida, retorna o último registro encontrado
   if (!valido) return registroEncontrado;
 
