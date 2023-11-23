@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
     const int qtdChaves = 20;
     int chavesBuscadas[qtdChaves];
 
-    const int intervaloSuperior = quantidade;
+    const int intervaloSuperior = 10000;
     const int intervaloInferior = 0;
 
     if (intervaloInferior > intervaloSuperior) {
@@ -78,10 +78,11 @@ int main(int argc, char** argv) {
       bool encontrou = pesquisaMetodo(metodo, situacao, chave, quantidade,
                                       false, &preProcesso, false);
       chavesEncontradas += encontrou ? 1 : 0;
-      if (encontrou) incrementAnalise(&global, preProcesso);
+      incrementAnalise(&global, preProcesso);
     }
-    if(chavesEncontradas)
-      dividePor(&global, chavesEncontradas);
+    
+    dividePor(&global, qtdChaves);
+
     printf("\nChaves buscadas:\n");
     for (int i = 0; i < qtdChaves; i++) {
       printf("%d ", chavesBuscadas[i]);
