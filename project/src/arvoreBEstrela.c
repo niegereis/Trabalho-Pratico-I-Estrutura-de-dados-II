@@ -371,8 +371,9 @@ bool pesquisaNoInterno(ArvoreBEstrela pNo, int chave, Analise* analise,
   int i = 0;
   while (i < pNo->U.Interno.qtdChaves && chave >= pNo->U.Interno.chaves[i]) i++;
   // Atualiza o contador de comparações da pesquisa
-  analise->comparacaoPesquisa += i;
+  analise->comparacaoPesquisa += i + 1;
   // Verifica se a chave é maior ou igual à última chave do nó interno
+  analise->comparacaoPesquisa++;
   if (chave >= pNo->U.Interno.chaves[i])
     return pesquisaNoInterno(
         pNo->U.Interno.apontadores[pNo->U.Interno.qtdChaves], chave, analise,
