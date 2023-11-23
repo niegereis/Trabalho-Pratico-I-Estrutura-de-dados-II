@@ -3,8 +3,6 @@
 
 #include "compartilhado.h"
 
-#define M 1
-
 typedef struct TipoPagina* TipoApontador;
 
 typedef struct TipoPagina {

@@ -190,6 +190,7 @@ Registro arvoreB(Analise *analise, int chave, short *achou, FILE *arquivo,
     i++;
     Insere(registroEncontrado, &arvore, analise);
   }
+  analise->transferenciaInsercao = i;
   clock_gettime(CLOCK_REALTIME, &fim);
   analise->tempoInsere =
       (fim.tv_sec - inicio.tv_sec) * 1e9 + (fim.tv_nsec - inicio.tv_nsec);

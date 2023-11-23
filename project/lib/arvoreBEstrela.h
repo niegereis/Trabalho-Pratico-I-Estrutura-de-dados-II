@@ -3,8 +3,6 @@
 
 #include "compartilhado.h"
 
-#define M 1
-
 typedef enum { Interno, Externo } TipoDoNo;
 
 typedef struct noU* ArvoreBEstrela;

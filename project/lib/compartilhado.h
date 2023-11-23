@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+# define M 2
+
 typedef struct registro {
   int chave;
   long int dado1;

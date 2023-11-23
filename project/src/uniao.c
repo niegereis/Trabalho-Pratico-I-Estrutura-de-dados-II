@@ -96,8 +96,10 @@ bool pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
       imprimeAnalise(*analise);
 
     } 
-    else
+    else{
       printf("\nO registro não foi encontrado!\n\n");
+      imprimeAnalise(*analise);
+    }
   }
   if (achou)
     return true;
