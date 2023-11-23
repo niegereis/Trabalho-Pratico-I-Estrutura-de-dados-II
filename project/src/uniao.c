@@ -10,8 +10,8 @@ void analiseInicia(Analise* analise) {
 }
 
 void imprimeRegistro(Registro reg) {
-  printf("Registro:\n\tChave: %d\n\tDado 1: %ld\n\tDado 2: [PLACEHOLDER]",
-         reg.chave, reg.dado1);
+  printf("Registro:\n\tChave: %d\n\tDado 1: %ld\n\tDado 2: %s",
+         reg.chave, reg.dado1, reg.dado2);
 }
 
 void imprimeAnalise(Analise an) {
@@ -87,16 +87,17 @@ bool pesquisaMetodo(int metodo, int situacao, int chave, int quantidade,
 
   if (imprimirRelatorio) {
     if (achou == 1) {
-      imprimeAnalise(*analise);
+      printf("\nRegistro encontrado!\n");
       if (exibirRegistros) {
         printf("\n=============================================\n");
-        printf("Registro encontrado\n");
         imprimeRegistro(encontrado);
         printf("\n=============================================\n\n");
       }
+      imprimeAnalise(*analise);
 
-    } else
-      printf("nope\n");
+    } 
+    else
+      printf("\nO registro não foi encontrado!\n\n");
   }
   if (achou)
     return true;

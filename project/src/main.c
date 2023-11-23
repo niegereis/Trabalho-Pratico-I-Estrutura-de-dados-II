@@ -46,8 +46,7 @@ int main(int argc, char** argv) {
 
   if (argc >= 5) {
     Analise preProcesso;
-    pesquisaMetodo(metodo, situacao, chave, quantidade, exibirRegistros,
-                   &preProcesso, true);
+    pesquisaMetodo(metodo, situacao, chave, quantidade, exibirRegistros, &preProcesso, true);
   } else {
     Analise global;
     analiseInicia(&global);
@@ -55,7 +54,7 @@ int main(int argc, char** argv) {
     const int qtdChaves = 20;
     int chavesBuscadas[qtdChaves];
 
-    const int intervaloSuperior = 10000;
+    const int intervaloSuperior = 2e9;
     const int intervaloInferior = 0;
 
     if (intervaloInferior > intervaloSuperior) {
@@ -81,7 +80,7 @@ int main(int argc, char** argv) {
       incrementAnalise(&global, preProcesso);
     }
     
-    dividePor(&global, qtdChaves);
+    if(qtdChaves)dividePor(&global, qtdChaves);
 
     printf("\nChaves buscadas:\n");
     for (int i = 0; i < qtdChaves; i++) {
